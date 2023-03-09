@@ -3,9 +3,8 @@ function solve(array) {
 
     array.forEach(info => {
 
-        info = info.split(' ');
-        let name = info[0];
-        let number = info[1];
+        let [name, number] = info.split(' ');
+       
 
         phoneBook[name] = number
     })

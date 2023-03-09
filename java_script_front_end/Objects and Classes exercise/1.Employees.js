@@ -1,10 +1,12 @@
 function solve(personInfo) {
     let person = {};
 
-    for (let employee of personInfo) {
-         person.name = employee;
-         person.personalNumber = employee.length;
-         console.log(`Name: ${person.name} -- Personal Number: ${person.personalNumber}`)
+    for (const employee of personInfo) {
+         person[employee] = employee.length;
+    }
+
+    for (const key in person) {
+        console.log(`Name: ${key} -- Personal Number: ${person[key]}`)
     }
 
 }
