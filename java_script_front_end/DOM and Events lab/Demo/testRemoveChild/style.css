@@ -1,0 +1,24 @@
+li {
+    width: 20vw;
+    height: 40px;
+    font-size: x-large;
+}
+.red {
+    background-color: rgb(184, 180, 180);
+    color: red;
+}
+
+.blue {
+    background-color: rgb(235, 231, 231);
+    color: blue;
+}
+
+button {
+    background-color: red;
+    color: black;
+    border: none;
+    font-size: large;
+    border-radius: 25px;
+    padding: 5px 15px;
+    margin-left: 50px;
+}
