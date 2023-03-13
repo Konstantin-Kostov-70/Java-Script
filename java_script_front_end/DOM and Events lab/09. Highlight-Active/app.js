@@ -2,11 +2,12 @@ function focused() {
     let inputField = Array.from(document.querySelectorAll('input[type="text"]'));
     inputField.forEach(e => {
         e.addEventListener('focus', function() {
-            console.log(e.parentElement.classList)
-            e.parentElement.classList.add('focused');
+            e.parentNode.classList.add('focused'); 
+            // e.parentNode.className = 'focused';
         });
         e.addEventListener('blur', function(){
-            e.parentElement.classList.remove('focused');
+            e.parentNode.classList.remove('focused');
+            // e.parentNode.className = '';
         })
 
     })
