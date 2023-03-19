@@ -1,8 +1,8 @@
 function solve() {
    document.querySelector('#btnSend').addEventListener('click', onClick);
    const data = document.querySelector('#inputs textarea');
-   const bestRest = document.querySelector('#bestRestaurant span');
-   const bestWorkers = document.querySelector('#workers span');
+   const bestRest = document.querySelector('#bestRestaurant p');
+   const bestWorkers = document.querySelector('#workers p');
 
    function onClick () {
         let arr = JSON.parse(data.value);
@@ -12,52 +12,49 @@ function solve() {
         let bestSalary = 0
        
       for (let currentData of arr) {
-         currentData = currentData.split(', ');
-         let [restaurant, firstWorker ] = currentData.shift().split(' - ');
-         let[firstWorkerName, firstWorkerSalary] = firstWorker.split(' ');
-
-         restaurants[restaurant] = [];
-
-         restaurants[restaurant].push
-         ({
-            name: firstWorkerName,
-            salary: Number(firstWorkerSalary)
-         });
+         currentData = currentData.split(' - ');
+         let restaurant = currentData[0];
+         let workersArray = currentData[1].split(', ')
+         let workers = [];
          
-         for(worker of currentData) {
+         for(let worker of workersArray) {
             let [name, salary] = worker.split(' '); 
-            restaurants[restaurant].push
+            workers.push
             ({
                name: name,
                salary: Number(salary)
             });
          }
-      }
-      
-      for (let restaurant in restaurants) {
-         let currentSum = 0
-         let currentAverage = 0
-          for (worker of restaurants[restaurant]) {
-               currentSum += worker.salary
 
-          }
-          currentAverage = currentSum / restaurants[restaurant].length
-          if (currentAverage > bestAverage) {
-            bestAverage = currentAverage
-            bestRestaurant = restaurant
-          }
+         if (restaurants[restaurant]) {
+            workers = workers.concat(restaurants[restaurant].workers)
+         }
+         
+         workers.sort((a, b) => b.salary - a.salary)
+
+         let average = workers
+         .reduce((acc, c) => acc + c.salary, 0) / workers.length
+
+         let bestWorkerSalary = workers[0].salary
+
+         restaurants[restaurant] = {
+            workers,
+            average,
+            bestWorkerSalary
+         }
       }
       
-      for (worker of restaurants[bestRestaurant]) {
-          if (worker.salary > bestSalary) {
-            bestSalary = worker.salary
-          }
-      }
-      
+      for (let name in restaurants) {
+         if(restaurants[name].average > bestAverage) {
+            bestRestaurant = name
+            bestAverage = restaurants[name].average
+            bestSalary = restaurants[name].bestWorkerSalary
+         }
+      } 
       bestRest.textContent = `Name: ${bestRestaurant} Average Salary: ${bestAverage.toFixed(2)} Best Salary: ${bestSalary.toFixed(2)}`
-      let sortedRestaurant = restaurants[bestRestaurant].sort((a, b) => b.salary - a.salary)
-      for (worker of sortedRestaurant) {
-         bestWorkers.textContent += `Name: ${worker.name} With Salary: ${worker.salary}`+ ' '
+
+      for (worker of restaurants[bestRestaurant].workers) {
+         bestWorkers.textContent += `Name: ${worker.name} With Salary: ${worker.salary} `
       }
    }
 }
