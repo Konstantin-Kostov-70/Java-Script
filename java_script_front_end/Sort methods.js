@@ -17,3 +17,6 @@ console.log(sortedAscStr)
 let sortedDescStr = [...names].sort((a, b) => b.localeCompare(a)) 
 console.log(sortedDescStr)
 
+
+
+
