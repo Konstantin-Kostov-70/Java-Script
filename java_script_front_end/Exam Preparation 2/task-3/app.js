@@ -108,7 +108,7 @@ function solve() {
         loadProduct()
     }
 
-    function createEl(tag, _class, text, id, parent) {
+    function createEl(tag, _class, text, _id, parent) {
         let element = document.createElement(tag)
         if (_class) {
             element.classList.add(_class)
