@@ -106,7 +106,6 @@ function attachEvents() {
   }
 
   async function deleteBook(ev) {
-    let id = undefined
     if (ev.target.tagName === 'BUTTON' && ev.target.textContent === 'Delete') {
       let id = ev.target.parentElement.id
 

@@ -2,126 +2,117 @@ window.addEventListener("load", solve);
 
 function solve() {
 
-  // Take reference from DOM tree //
-
-  const main = document.querySelector('#main');
-  const firstName = document.querySelector('#first-name');
-  const lastName = document.querySelector('#last-name');
-  const age = document.querySelector('#age');
-  const title = document.querySelector('#story-title');
-  const genre = document.querySelectorAll('#genre > option');
-  const story = document.querySelector('#story');
-  const btnPublish = document.querySelector('#form-btn');
-  btnPublish.addEventListener('click', publish);
-  const preview = document.querySelector('#preview-list');
-
-  // start the eventListener //
-
-  function publish(ev) {
-
-    let allValue = [
-      firstName.value,
-      lastName.value,
-      age.value,
-      title.value,
-      story.value
-    ]
-    let nonValue = allValue
-      .filter(value => value === '');
-
-    if (nonValue.length > 0) {
-      return
-    }
-    // create elements and add to HTML //
-
-    let li = document.createElement('li')
-    li.classList.add('story-info');
-
-    let article = document.createElement('article');
-    let fullName = document.createElement('h4');
-    let pAge = document.createElement('p');
-    let pTitle = document.createElement('p');
-    let pGenre = document.createElement('p');
-    let pStore = document.createElement('p');
-
-    let btnSave = document.createElement('button');
-    btnSave.classList.add('save-btn');
-    btnSave.textContent = 'Save Story';
-
-    let btnEdit = document.createElement('button');
-    btnEdit.classList.add('edit-btn');
-    btnEdit.textContent = 'Edit Story';
-
-    let btnDelete = document.createElement('button');
-    btnDelete.classList.add('delete-btn');
-    btnDelete.textContent = 'Delete Story';
-
-    article.appendChild(fullName);
-    article.appendChild(pAge);
-    article.appendChild(pTitle);
-    article.appendChild(pGenre);
-    article.appendChild(pStore);
-
-    li.appendChild(article)
-    li.appendChild(btnSave)
-    li.appendChild(btnEdit)
-    li.appendChild(btnDelete)
-
-    preview.appendChild(li)
-
-    fullName.textContent = `Name: ${firstName.value} ${lastName.value}`;
-
-    pAge.textContent = `Age: ${age.value}`;
-
-    pTitle.textContent = `Title: ${title.value}`
-
-    Array.from(genre).forEach(option => {
-      if (option.selected) {
-        pGenre.textContent = `Genre: ${option.value}`
+    // Take reference from DOM tree //
+  
+    const main = document.querySelector('#main');
+    const firstName = document.querySelector('#first-name');
+    const lastName = document.querySelector('#last-name');
+    const age = document.querySelector('#age');
+    const title = document.querySelector('#story-title');
+    const genre = document.querySelectorAll('option');
+    const story = document.querySelector('#story');
+    const btnPublish = document.querySelector('#form-btn');
+    btnPublish.addEventListener('click', publish);
+    const preview = document.querySelector('#preview-list');
+  
+    // start the eventListener //
+  
+    function publish(ev) {
+  
+      
+      let fName = firstName.value
+      let lName = lastName.value
+      let storyAge = age.value
+      let storyTitle = title.value
+      let text = story.value
+      let storyGenre  = Array.from(genre).find(option => option.selected).value
+  
+      if (!fName || !lName || !storyAge || !storyTitle || !text) {
+        return
       }
-    });
+      // create elements and add to HTML //
+  
+      let li = createElement('li', null, preview, null, ['story-info'])
+      let article = createElement('article', null, li);
+      let fullName = createElement('h4', `Name: ${fName} ${lName}`, article);
+      let pAge = createElement('p', `Age: ${storyAge}`, article);
+      let pTitle = createElement('p', `Title: ${storyTitle}`, article);
+      let pGenre = createElement('p', `Genre: ${storyGenre}`, article);
+      let pStore = createElement('p', text, article);
+  
+      let btnSave = createElement('button', 'Save Story', li, null, ['save-btn']);
+      let btnEdit = createElement('button', 'Edit Story', li, null, ['edit-btn']);
+      let btnDelete = createElement('button', 'Delete Story', li, null, ['delete-btn']);
 
-    pStore.textContent = story.value;
-
-    firstName.value = '';
-    lastName.value = '';
-    age.value = '';
-    title.value = '';
-    story.value = '';
-
-    btnPublish.disabled = true;
-
-    btnEdit.addEventListener('click', editData);
-    btnSave.addEventListener('click', saveData);
-    btnDelete.addEventListener('click', deleteData);
-
-    function editData(ev) {
-
-      firstName.value = allValue[0];
-      lastName.value = allValue[1];
-      age.value = allValue[2];
-      title.value = allValue[3];
-      story.value = allValue[4];
-
-      li.remove()
-      btnPublish.disabled = false;
+      btnEdit.addEventListener('click', editData);
+      btnSave.addEventListener('click', saveData);
+      btnDelete.addEventListener('click', deleteData);
+  
+      firstName.value = '';
+      lastName.value = '';
+      age.value = '';
+      title.value = '';
+      story.value = '';
+  
+      btnPublish.disabled = true;
+  
+      function editData(ev) {
+  
+        firstName.value = fName;
+        lastName.value = lName;
+        age.value = storyAge;
+        title.value = storyTitle;
+        story.value = text;
+  
+        li.remove()
+        btnPublish.disabled = false;
+      }
+  
+      function saveData(ev) {
+        Array
+          .from(main.children)
+          .forEach(child => main.removeChild(child))
+  
+        let saveTitle = document.createElement('h1')
+        saveTitle.textContent = "Your scary story is saved!"
+        main.appendChild(saveTitle)
+      }
+  
+      function deleteData(ev) {
+        preview.removeChild(li)
+        btnPublish.disabled = false
+      }
+  
     }
 
-    function saveData(ev) {
-      Array
-        .from(main.children)
-        .forEach(child => main.removeChild(child))
-
-      let saveTitle = document.createElement('h1')
-      saveTitle.textContent = "Your scary story is saved!"
-      main.appendChild(saveTitle)
+    function createElement(tag, text, parent, _id, _class, attributes) {
+      let element = document.createElement(tag)
+  
+      if (text) {
+        if (tag === 'input' || tag === 'textarea') {
+          element.value = text
+        }
+        else {
+          element.textContent = text
+        }
+      }
+      if (parent) {
+        parent.appendChild(element)
+      }
+      if (_id) {
+        element.id = _id
+      }
+      if (_class) {
+        element.classList.add(..._class)
+      }
+      if (attributes) {
+        for (key in attributes) {
+          element.setAttribute(key, attributes[key])
+        }
+      }
+      return element
     }
-
-    function deleteData(ev) {
-      preview.removeChild(li)
-      btnPublish.disabled = false
-    }
-
+  
+  
   }
-
-}
+  
