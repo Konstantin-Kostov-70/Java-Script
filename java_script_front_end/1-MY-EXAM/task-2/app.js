@@ -1,6 +1,7 @@
 window.addEventListener('load', solve);
 
 function solve() {
+    const form = document.querySelector('#create-task-form')
     const titleEl = document.querySelector('#title')
     const descriptionEl = document.querySelector('#description')
     const labelEl = document.querySelector('#label')
@@ -78,11 +79,7 @@ function solve() {
         smallDeleteBtn.addEventListener('click', backToForm)
         sectionTasks.appendChild(article)
 
-        titleEl.value = ''
-        descriptionEl.value = ''
-        labelEl.value = ''
-        estimationPointsEl.value = ''
-        assigneeEl.value = ''
+        form.reset()
 
         function backToForm(ev) {
 
@@ -122,13 +119,10 @@ function solve() {
         assigneeEl.disabled = false
         labelEl.disabled = false
 
-        titleEl.value = ''
-        descriptionEl.value = ''
-        labelEl.value = ''
-        estimationPointsEl.value = ''
-        assigneeEl.value = ''
+        form.reset()
 
         createBtn.disabled = false
         deleteTaskBtn.disabled = true
     }
 }
+
