@@ -1,7 +1,6 @@
 {
   "name": "intro-to-react-and-jsx",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "Start": "npx babel --watch ./src --out-dir ./build --presets react-app/prod"
@@ -12,5 +11,6 @@
   "dependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-react-app": "^3.1.2"
-  }
+  },
+  "description": ""
 }

@@ -6,6 +6,15 @@ var root = ReactDOM.createRoot(rootElement);
 // const headerElement = React.createElement('header', {}, headingElement, secondElement);
 // Use JSX Syntax
 
+var Heading = function Heading(props) {
+    return React.createElement(
+        'h1',
+        null,
+        'Hello from ',
+        props.title
+    );
+};
+
 var headerElement = React.createElement(
     'div',
     null,
@@ -17,11 +26,7 @@ var headerElement = React.createElement(
     React.createElement(
         'header',
         null,
-        React.createElement(
-            'h1',
-            null,
-            'Hello from React'
-        ),
+        React.createElement(Heading, { title: 'React app' }),
         React.createElement(
             'h2',
             null,
