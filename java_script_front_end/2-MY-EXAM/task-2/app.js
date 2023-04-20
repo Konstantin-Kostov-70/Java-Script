@@ -1,129 +1,128 @@
 window.addEventListener('load', solve);
 
 function solve() {
-    const section = document.querySelector('#tasks-section')
     const form = document.querySelector('#create-task-form')
-    const elementTitle = document.querySelector('#title')
-    const elementDesc = document.querySelector('#description')
-    const elementLabel = document.querySelector('#label')
-    const elementPoints = document.querySelector('#points')
-    const elementAssignee = document.querySelector('#assignee')
+    const titleEl = document.querySelector('#title')
+    const descriptionEl = document.querySelector('#description')
+    const labelEl = document.querySelector('#label')
+    const estimationPointsEl = document.querySelector('#points')
+    const assigneeEl = document.querySelector('#assignee')
 
-    const btnCreate = document.querySelector('#create-task-btn')
-    btnCreate.addEventListener('click', createTask)
-    const btnDelete = document.querySelector('#delete-task-btn')
-    btnDelete.addEventListener('click', deleteTask)
+    const createBtn = document.querySelector('#create-task-btn')
+    const deleteTaskBtn = document.querySelector('#delete-task-btn')
+    createBtn.addEventListener('click', onCreate)
+    deleteTaskBtn.addEventListener('click', onDeleteTask)
 
-    const hiddenId = document.querySelector('#task-id')
-    const totalPoints = document.querySelector('#total-sprint-points')
-
+    const sectionTasks = document.querySelector('#tasks-section')
+    const pointsEl = document.querySelector('#total-sprint-points')
+    const hiddenInput = document.querySelector('#task-id')
+    let totalPoints = 0
     let counter = 0
-    let total = 0
 
-    function createTask() {
-        counter++
-        let id = `task-${counter}`
-
-        let title = elementTitle.value
-        let desc = elementDesc.value
-        let label = elementLabel.value
-        let points = Number(elementPoints.value)
-        let assignee = elementAssignee.value
-
-        let allValues = []
-
-        if (!title || !desc || !label || !points || !assignee) {
+    function onCreate(ev) {
+        ev.preventDefault()
+        
+        let title = titleEl.value
+        let description = descriptionEl.value
+        let label = labelEl.value
+        let estimatedPoints = estimationPointsEl.value
+        let assignee = assigneeEl.value
+        
+        if (!title || !description || !label || !estimatedPoints || !assignee) {
             return
         }
-        allValues.push({
+        
+        counter ++
+        let allTasks = []
+        let id = `task-${counter}`
+
+        allTasks.push({
+            id,
             title,
-            desc,
+            description,
             label,
-            points,
-            assignee,
-            id
+            estimatedPoints,
+            assignee
         })
 
-        let classWord = ''
+        totalPoints += Number(estimationPointsEl.value)
+        pointsEl.textContent = `Total Points ${totalPoints}pts`
+        let _class = ''
         let icon = ''
 
-        switch (label) {
-            case 'Feature':
-                classWord = 'feature'
-                icon = '&#8865;'
-                break;
-
-            case 'Low Priority Bug':
-                classWord = 'low-priority'
-                icon = '&#9737;'
-                break;
-
-            default:
-                classWord = 'high-priority'
-                icon = '&#9888;'
-                break;
+        if (label === 'Feature') {
+            _class = 'feature'
+            icon = '&#8865;'
+        }
+        else if (label === 'Low Priority Bug') {
+            _class = "low-priority"
+            icon = '&#9737;'
+        }
+        else if (label === 'High Priority Bug') {
+            _class = "high-priority"
+            icon = '&#9888;'
         }
 
-
-        let article = document.createElement('article')
-        article.id = id
+        const article = document.createElement('article')
         article.className = 'task-card'
+        article.id = id
         article.innerHTML = `
-       <div class="task-card-label ${classWord}">${label} ${icon}</div>
-       <h3 class="task-card-title">${title}</h3> 
-       <p class="task-card-description">${desc}</p>
-       <div class="task-card-points">Estimated at ${points} pts</div>
-       <div class="task-card-assignee">Assigned to: ${assignee}</div> 
-       <div class="task-card-actions">
-          <button>Delete</button>
-       </div>`
+             <div class="task-card-label ${_class}">${label} ${icon}</div>
+             <h3 class="task-card-title">${title}</h3> 
+             <p class="task-card-description">${description}</p>
+             <div class="task-card-points">Estimated at ${estimatedPoints} pts</div>
+             <div class="task-card-assignee">Assigned to: ${assignee}</div> 
+             <div class="task-card-actions">
+                 <button>Delete</button>
+             </div>`
+        const smallDeleteBtn = article.querySelector('button')
+        smallDeleteBtn.addEventListener('click', backToForm)
+        sectionTasks.appendChild(article)
 
-        let btn = article.querySelector('button')
-        btn.addEventListener('click', backToForm)
-
-        section.appendChild(article)
         form.reset()
-
-        total += points
-        totalPoints.textContent = `Total Points ${total}pts`
 
         function backToForm(ev) {
-            hiddenId.value = ev.target.parentNode.parentNode.id
-            btnDelete.disabled = false
-            btnCreate.disabled = true
 
-            let currentObj = allValues.find(obj => obj.id === hiddenId.value)
+            let parent = ev.target.parentNode.parentNode
+            hiddenInput.value = parent.id
+            deleteTaskBtn.disabled = false
+            createBtn.disabled = true
 
-            elementTitle.value = currentObj.title
-            elementDesc.value = currentObj.desc
-            elementLabel.value = currentObj.label
-            elementPoints.value = currentObj.points
-            elementAssignee.value = currentObj.assignee
+            let task = allTasks.find(task => task.id === parent.id)
 
-            elementTitle.disabled = true
-            elementDesc.disabled = true
-            elementLabel.disabled = true
-            elementPoints.disabled = true
-            elementAssignee.disabled = true
+            titleEl.value = task.title
+            descriptionEl.value = task.description
+            labelEl.value = task.label
+            estimationPointsEl.value = task.estimatedPoints
+            assigneeEl.value = task.assignee
 
-            total -= currentObj.points
-            totalPoints.textContent = `Total Points ${total}pts`
+
+            titleEl.disabled = true
+            descriptionEl.disabled = true
+            estimationPointsEl.disabled = true
+            assigneeEl.disabled = true
+            labelEl.disabled = true
 
         }
-
     }
 
-    function deleteTask() {
-        document.querySelector(`#${hiddenId.value}`).remove()
+    function onDeleteTask() {
+       
+        totalPoints -= Number(estimationPointsEl.value)
+        pointsEl.textContent = `Total Points ${totalPoints}pts`
+
+        document.querySelector(`#${hiddenInput.value}`).remove()
+
+        titleEl.disabled = false
+        descriptionEl.disabled = false
+        estimationPointsEl.disabled = false
+        assigneeEl.disabled = false
+        labelEl.disabled = false
+
         form.reset()
 
-        elementTitle.disabled = false
-        elementDesc.disabled = false
-        elementLabel.disabled = false
-        elementPoints.disabled = false
-        elementAssignee.disabled = false
-
-        btnCreate.disabled = false
-        btnDelete.disabled = true
+        createBtn.disabled = false
+        deleteTaskBtn.disabled = true
     }
 }
+

@@ -1,107 +1,106 @@
-// TODO:
 function attachEvents() {
-    const BASE_URL = 'http://localhost:3030/jsonstore/tasks/'
-    const elementTitle = document.querySelector('#title')
-    const elementDesc = document.querySelector('#description')
-    const todo = document.querySelector('#todo-section > ul')
+
+    const baseURL = 'http://localhost:3030/jsonstore/tasks/'
+    document.querySelector('#load-board-btn').addEventListener('click', loadTasks)
+    document.querySelector('#create-task-btn').addEventListener('click', createTask)
+
+    const toDo = document.querySelector('#todo-section > ul')
     const inProgress = document.querySelector('#in-progress-section > ul')
     const codeReview = document.querySelector('#code-review-section > ul')
     const done = document.querySelector('#done-section > ul')
 
-    document.querySelector('#load-board-btn').addEventListener('click', loadTasks)
-    document.querySelector('#create-task-btn').addEventListener('click', addTask)
+    const title = document.querySelector('#title')
+    const desc = document.querySelector('#description')
 
     async function loadTasks(ev) {
-        if(ev) {
+        if (ev) {
             ev.preventDefault()
         }
-        todo.innerHTML = ''
+        toDo.innerHTML = ''
         inProgress.innerHTML = ''
         codeReview.innerHTML = ''
         done.innerHTML = ''
 
-        const result = await fetch(BASE_URL)
-        const data = await result.json()
-        Object.values(data).forEach(task => {
+        const res = await fetch(baseURL)
+        const data = await res.json()
+
+        Object.values(data).forEach(obj => {
+
+            const { title, description, status, _id } = obj
+
             const li = createElement('li', null, null, null, ['task'])
-            const h3 = createElement('h3', `${task.title}`, li)
-            const p = createElement('p', `${task.description}`, li)
+            const h3 = createElement('h3', title, li)
+            const p = createElement('p', description, li)
+            const btn = createElement('button', null, li, _id)
+            btn.addEventListener('click', moveTask)
 
-            const btn = createElement('button', null, li)
-            btn.addEventListener('click', moveTasks)
-            btn.id = task._id
-
-            if (task.status === 'ToDo') {
+            if (status === 'ToDo') {
                 btn.textContent = 'Move to In Progress'
-                todo.appendChild(li)
+                toDo.appendChild(li)
             }
-            else if (task.status === 'In Progress') {
+            else if (status === 'In Progress') {
                 btn.textContent = 'Move to Code Review'
                 inProgress.appendChild(li)
             }
-            else if (task.status === 'Code Review') {
+            else if (status === 'Code Review') {
                 btn.textContent = 'Move to Done'
                 codeReview.appendChild(li)
             }
-            else {
+            else if (status === 'Done') {
                 btn.textContent = 'Close'
                 done.appendChild(li)
             }
         })
+
     }
 
-    async function addTask(ev) {
-        if (ev) {
-            ev.preventDefault()
-        }
-        let headers = {
+    async function createTask() {
+        const taskTitle = title.value
+        const taskDesc = desc.value
+        await fetch(baseURL, {
             method: 'POST',
             body: JSON.stringify({
-                title: elementTitle.value,
-                description: elementDesc.value,
+                title: taskTitle,
+                description: taskDesc,
                 status: 'ToDo'
             })
-        }
-        await fetch(BASE_URL, headers)
-
-        elementTitle.value = ''
-        elementDesc.value = ''
+        })
+        title.value = ''
+        desc.value = ''
         loadTasks()
     }
 
-    async function moveTasks(ev) {
-   
-        let headers = {}
-        let currentId = ev.target.id
-        let status = ''
+    async function moveTask(ev) {
+       let currentStatus = ev.target.textContent
+       let fetchStatus = ''
+       let id = ev.target.id
+       
+       if (currentStatus === 'Close') {
+        await fetch(`${baseURL}${id}`, {
+            method: 'DELETE'
+        })
+        ev.target.parentNode.remove()
+       }
 
-        if (ev.target.textContent !== 'Close') {
-            if (ev.target.textContent === 'Move to In Progress') {
-                status = 'In Progress'
-            }
-            else if (ev.target.textContent === 'Move to Code Review') {
-                status = 'Code Review'
-            }
-            else if (ev.target.textContent === 'Move to Done') {
-                status = 'Done'
-            }
-            headers =  {
-                method: 'PATCH',
-                body: JSON.stringify({
-                    status
-                })
-            } 
-            await fetch(`${BASE_URL}${currentId}`, headers)  
+       else {
+        if (currentStatus === 'Move to In Progress') {
+            fetchStatus = 'In Progress'
         }
-        else {
-            headers = { method: 'DELETE' }
-            await fetch(`${BASE_URL}${currentId}`, headers)
-            ev.target.parentNode.remove()
+        else if (currentStatus === 'Move to Code Review') {
+            fetchStatus = 'Code Review'
         }
-        loadTasks()
-        
+        else if (currentStatus === 'Move to Done') {
+            fetchStatus = 'Done'
+        }
+        await fetch(`${baseURL}${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify({
+                status: fetchStatus,
+            })
+        })
+       }
+       loadTasks()
     }
-
     function createElement(tag, text, parent, _id, _class, attributes) {
         let element = document.createElement(tag)
 
