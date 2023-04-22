@@ -44,9 +44,6 @@ function solve() {
         ev.preventDefault()
         await fetch(BASE_URL, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({
                 product: productName.value,
                 count: productCount.value,
@@ -89,9 +86,6 @@ function solve() {
     async function updateProduct(ev) {
         await fetch(`${BASE_URL}${updateId}`, {
             method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify({
                 product: productName.value,
                 count: productCount.value,
@@ -126,7 +120,6 @@ function solve() {
 
         return element
     }
-
 }
 
 solve()
