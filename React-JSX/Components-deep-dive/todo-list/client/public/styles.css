@@ -266,6 +266,17 @@ body {
   border-radius: 0.25rem;
   font-weight: bold;
 }
+.delete-btn {
+  background: red;
+  border: none;
+  margin-right: 20px;
+  padding: 5px 10px;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  font-weight: bold;
+}
 
 /* Footer */
 
