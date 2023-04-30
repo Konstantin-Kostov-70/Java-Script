@@ -17,7 +17,7 @@ function App() {
     }, [])
 
     const onChangeStatus = (todo) => {
-        setData(oldData => oldData.map(x => x._id === todo._id ? ({...x, isCompleted: !x.isCompleted}) : x))
+        // setData(oldData => oldData.map(x => x._id === todo._id ? ({...x, isCompleted: !x.isCompleted}) : x))
         const headers = {
             method: 'PUT',
             body: JSON.stringify({
