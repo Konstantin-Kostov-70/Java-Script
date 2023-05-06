@@ -42,3 +42,14 @@ export const deleteUser = async(userId) => {
     const result = await res.json()
     return result
 }
+
+export const updateUser = async(obj) => {
+    
+    const res = await fetch(`${BASE_URL}/${obj._id}`,{
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(obj)
+    })
+    const result = await res.json()
+    return result
+}

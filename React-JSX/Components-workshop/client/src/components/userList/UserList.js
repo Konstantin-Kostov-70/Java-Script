@@ -35,11 +35,7 @@ export const UserList = () => {
         setUser(null)
     }
 
-    const onUserCreate = (e) => {
-        e.preventDefault()
-        const formData = new FormData(e.target)
-        const userData = Object.fromEntries(formData)
-
+    const onUserCreate = (userData) => {
         userServices.createUser(userData)
             .then(user => {
                 setUsers(users => [...users, user])
@@ -52,13 +48,13 @@ export const UserList = () => {
         setUsers(users => users.filter(x => x._id !== userId))
         onClose()
     }
-
-    const onUserEdit = (ev) => {
-        ev.preventDefault()
-    }
-
-    const onInfo = (userId, actionType) => {
-        console.log(userId, actionType)
+    const onUserEdit = (updateUser) => {
+        userServices.updateUser(updateUser)
+        .then(obj => {
+            
+            setUsers(users.map(x => x._id === obj.user._id ? obj.user : x))
+            onClose()
+        })
     }
 
     return (
@@ -135,7 +131,7 @@ export const UserList = () => {
                     <UserDetails user={user} onClose={onClose} />}
 
                 {userAction === UserAction.Edit &&
-                    <UserEdit user={user} onClose={onClose} onUserEdit={onUserEdit} onInfo={onInfo}/>}
+                    <UserEdit user={user} onClose={onClose} onUserEdit={onUserEdit}/>}
 
                 {userAction === UserAction.Delete &&
                     <UserDelete user={user} onClose={onClose} onUserDelete={onUserDelete} />}

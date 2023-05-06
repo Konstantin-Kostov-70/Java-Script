@@ -1,4 +1,4 @@
-import { UserAction } from "../UserListConstants"
+// import { UserAction } from "../UserListConstants"
 export const UserDelete = ({
     user,
     onClose,
@@ -22,7 +22,7 @@ export const UserDelete = ({
           </header>
           <div className="actions">
             <div id="form-actions">
-              <button id="action-save" className="btn" type="submit" onClick={() => onUserDelete(user._id,UserAction.Delete )}>Delete</button>
+              <button id="action-save" className="btn" type="submit" onClick={() => onUserDelete(user._id)}>Delete</button>
               <button id="action-cancel" className="btn" type="button" onClick={onClose}>
                 Cancel
               </button>
