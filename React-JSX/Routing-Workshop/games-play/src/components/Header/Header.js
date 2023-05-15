@@ -1,23 +1,20 @@
+import {Link} from 'react-router-dom'
 export const Header = () => {
     return (
         <header>
-        {/* Navigation */}
         <h1>
-          <a className="home" href="#">
-            GamesPlay
-          </a>
+          <Link to={'/'}>GamesPlay</Link>
         </h1>
         <nav>
-          <a href="#">All games</a>
-          {/* Logged-in users */}
+          <Link to={'/catalogue'}>All games</Link>
           <div id="user">
-            <a href="#">Create Game</a>
-            <a href="#">Logout</a>
+            <Link to={'/create_game'}>Create Game</Link>
+            <Link to={'/logout'}>Logout</Link>
           </div>
-          {/* Guest users */}
+        
           <div id="guest">
-            <a href="#">Login</a>
-            <a href="#">Register</a>
+            <Link to={'/login'}>Login</Link>
+            <Link to={'/register'}>Register</Link>
           </div>
         </nav>
       </header>

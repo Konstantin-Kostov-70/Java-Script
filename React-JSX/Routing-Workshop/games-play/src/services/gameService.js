@@ -6,3 +6,10 @@ export const getAll = () => {
             .then(res => res.json())
     )
 }
+
+// export const getOne = (id) => {
+//     return (
+//         fetch(`${BASE_URL}/data/games/${id}`)
+//         .then(res => res.json())
+//     )
+// }

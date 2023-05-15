@@ -1,19 +1,9 @@
-import { useEffect, useState } from 'react'
-import * as gameService from '../../services/gameService'
 import LatestGames from './LatestGames/LatestGames'
 
-const Home = () => {
-  const [games, setGames] = useState([])
-
-  useEffect(() => {
-    gameService.getAll()
-    .then(result => {
-      setGames(result)
-    })
-    
-  }, [])
+const Home = ({games}) => {
  
   return (
+    
     <section id="welcome-world">
       <div className="welcome-message">
         <h2>ALL new games are</h2>
@@ -22,9 +12,7 @@ const Home = () => {
       <img src="./images/four_slider_img01.png" alt="hero" />
       <div id="home-page">
         <h1>Latest Games</h1>
-        {/* Display div: with information about every game (if any) */}
-          
-        {/* Display paragraph: If there is no games  */}
+      
         {games.length > 0 
         ? games.map(game => <LatestGames key={game._id} game={game}/>) 
         : <p className="no-articles">No games yet</p>}
