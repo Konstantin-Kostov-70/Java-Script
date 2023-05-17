@@ -1,0 +1,22 @@
+.site-wrapper {
+    text-align: center;
+    width: 480px;
+    margin: 20px auto; 
+    background-color: bisque;
+    padding: 20px;
+}
+button {
+    margin-left: 10px;
+}
+ul {
+    list-style: none;
+}
+li {
+    width: 100px ;
+}
+.list-item {
+    justify-content: center;
+    margin-bottom: 10px;
+    display: flex;
+}
+
