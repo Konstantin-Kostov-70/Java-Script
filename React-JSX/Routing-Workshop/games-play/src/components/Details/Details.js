@@ -1,11 +1,12 @@
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { useState, useContext } from 'react'
 import { GameContext } from "../../contexts/GameContext"
 
-// import * as gameService from '../../services/gameService'
+import * as gameService from '../../services/gameService'
 
 const Details = ({addComment}) => {
-    const {games} = useContext(GameContext)
+    const navigate = useNavigate()
+    const {games, deleteGameHandler} = useContext(GameContext)
     const { id } = useParams()
     const [gameComment, setGameComment] = useState({
         username: '',
@@ -19,13 +20,12 @@ const Details = ({addComment}) => {
         comment: ''
     })
 
-
-    // useEffect(() => {
-    //     gameService.getOne(id)
-    //         .then(result => {
-    //             setGame(result)
-    //         })
-    // }, [id])
+    const onDelete = () => {
+        console.log('ok');
+        gameService.deleteGame(id)
+        deleteGameHandler(id)
+        navigate('/catalogue')
+    }
 
     const addCommentHandler = (ev) => {
         ev.preventDefault()
@@ -87,10 +87,8 @@ const Details = ({addComment}) => {
                 </div>
                 {/* Edit/Delete buttons ( Only for creator of this game )  */}
                 <div className="buttons">
-                    <Link to={'/edit'} className="button">Edit</Link>
-                    <Link className="button">
-                        Delete
-                    </Link>
+                    <Link to={`/edit/${id}`} className="button">Edit</Link>
+                    <button className="button" onClick={onDelete}>Delete</button>
                 </div>
             </div>
             {/* Bonus */}

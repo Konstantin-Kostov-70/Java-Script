@@ -1,6 +1,5 @@
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { useEffect, useState, lazy, Suspense } from 'react';
-import uniqid from 'uniqid';
 import { GameContext } from './contexts/GameContext';
 import { AuthContext } from './contexts/AuthContext';
 import * as gameService from './services/gameService';
@@ -13,14 +12,13 @@ import Catalogue from "./components/Catalogue/Catalogue"
 import Logout from './components/Logout/Logout';
 import Details from './components/Details/Details';
 import Edit from './components/Edit/Edit';
-
-// import Register from './components/Register/Register';
+import { useLocalStorage } from './hooks/useLocalStorage';
 
 const Register = lazy(() => import('./components/Register/Register'))
 
 function App() {
-    const [auth, setAuth] = useState({})
     const [games, setGames] = useState([])
+    const [auth, setAuth] = useLocalStorage('auth', {})
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -54,20 +52,29 @@ function App() {
     const addGame = (game) => {
         setGames(state => [
             ...state,
-            {
-                ...game,
-                _id: uniqid()
-            }
+            game
         ])
         navigate('/catalogue')
     }
 
+    const editGameHandler = (game) => {
+        setGames(state => ([
+            ...state.filter(obj => obj._id !== game._id),
+            game
+        ]))
+    }
+
+    const deleteGameHandler = (id) => {
+        setGames(state => (state.filter(obj => obj._id !== id)))
+       
+    }
+
     return (
-        <AuthContext.Provider value={{auth, userLogin, userLogout}}>
-            <GameContext.Provider value={{ games }}>
-                <div id="box">
-                    < Header />
-                    {/* Main Content */}
+        <AuthContext.Provider value={{ auth, userLogin, userLogout }}>
+            <div id="box">
+                < Header />
+                {/* Main Content */}
+                <GameContext.Provider value={{ addGame, games, editGameHandler, deleteGameHandler }}>\
                     <main id="main-content">
                         <Routes>
                             <Route path='/' element={<Home />} />
@@ -77,32 +84,17 @@ function App() {
                                 <Suspense>
                                     <Register />
                                 </Suspense>
-                            } />
+                            }/>
                             <Route path='/catalogue' element={<Catalogue />} />
                             <Route path='/details/:id' element={<Details addComment={addComment} />} />
-                            <Route path='/create_game' element={<Create addGame={addGame} />} />
+                            <Route path='/create_game' element={<Create />} />
                             <Route path='/logout' element={<Logout />} />
-                            <Route path='/edit' element={<Edit />} />
-
+                            <Route path='/edit/:id' element={<Edit />} />
                         </Routes>
                     </main>
-
-                    {/* Login Page ( Only for Guest users ) */}
-
-                    {/* Register Page ( Only for Guest users ) */}
-
-                    {/* Create Page ( Only for logged-in users ) */}
-
-                    {/* Edit Page ( Only for the creator )*/}
-
-                    {/*Details Page*/}
-
-                    {/* Catalogue */}
-
-                </div>
-            </GameContext.Provider>
+                </GameContext.Provider>
+            </div>
         </AuthContext.Provider>
-
     );
 }
 

@@ -1,23 +1,34 @@
 export const request = async (method,url, data) => {
     
     try {
-        let buildRequest = undefined
+        const user = localStorage.getItem('auth')
+        const auth = JSON.parse(user || '{}')
+        let headers = {}
+
+        if (auth.accessToken) {
+            headers['X-Authorization'] = auth.accessToken
+        }
+
+        let buildRequest;
 
         if (method === 'GET') {
-            buildRequest = fetch(url)
+            buildRequest = fetch(url, {headers})
         }
         else {
             buildRequest = fetch(url, {
                 method,
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    ...headers,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(data)
-            })
+            });
         }
 
-        const response = await buildRequest
-        const result = await response.json()
+        const response = await buildRequest;
+        const result = await response.json();
 
-        return result
+        return result;
 
     } catch (error) {
         console.log(error)
