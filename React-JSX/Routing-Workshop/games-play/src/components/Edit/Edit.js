@@ -29,7 +29,7 @@ const Edit = () => {
         ev.preventDefault();
 
         gameServices.editGame(id, currentGame)
-            .then(result => editGameHandler(result))
+            .then(result => editGameHandler(id, result))
         
             navigate(`/details/${id}`)
     }

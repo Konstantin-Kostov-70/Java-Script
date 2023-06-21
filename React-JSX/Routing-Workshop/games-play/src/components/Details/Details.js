@@ -1,24 +1,28 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { useState, useContext } from 'react'
+import { useState, useContext, useEffect } from 'react'
 import { GameContext } from "../../contexts/GameContext"
 
 import * as gameService from '../../services/gameService'
+import * as commentService from '../../services/commentService'
 
-const Details = ({addComment}) => {
+const Details = () => {
     const navigate = useNavigate()
-    const {games, deleteGameHandler} = useContext(GameContext)
+    const { deleteGameHandler } = useContext(GameContext)
     const { id } = useParams()
-    const [gameComment, setGameComment] = useState({
-        username: '',
-        comment: ''
-    })
+    const [game, setGame] = useState({})
+    const [comments, setComments] = useState([])
 
-    const game = games.find(game => game._id === id)
+    useEffect(() => {
+        gameService.getOne(id)
+            .then(result => {
+                setGame(result)
+            })
 
-    const [errors, setErrors] = useState({
-        username: '',
-        comment: ''
-    })
+        commentService.getComments()
+            .then(result => {
+                setComments(result.filter(obj => obj.gameId === id))
+            })
+    }, [])
 
     const onDelete = () => {
         console.log('ok');
@@ -29,36 +33,17 @@ const Details = ({addComment}) => {
 
     const addCommentHandler = (ev) => {
         ev.preventDefault()
-        addComment(game._id, `${gameComment.username}: ${gameComment.comment}`)
-        setGameComment({
-            username: '',
-            comment: ''
-        })
+        const formData = new FormData(ev.target)
+        const comment = formData.get('comment')
 
+        commentService.createComment(id, comment)
+            .then(result => {
+                setComments(state => [...state, result])
+            })
+        
+        ev.target.reset() 
     }
-
-    const onChange = (ev) => {
-        setGameComment(state => ({
-            ...state,
-            [ev.target.name]: ev.target.value
-        }))
-    }
-  
-    const validateUser = (ev) => {
-        let message = ''
-        const value = ev.target.value
-        if (value.length < 5) {
-            message = 'Username must be longer then 5 character'
-        }
-        else if (value.length > 10) {
-            message = 'Username must be shorter then 10 character'
-        }
-        setErrors(state => ({
-            ...state,
-            [ev.target.name]: message
-        }))
-    }
-
+ 
     return (
         <section id="game-details">
             <h1>Game Details</h1>
@@ -74,10 +59,10 @@ const Details = ({addComment}) => {
                 <div className="details-comments">
                     <h2>Comments:</h2>
                     <ul>
-                        {game.comments && game.comments.length > 0
-                            ? game.comments.map((comment, idx) => (
+                        {comments && comments.length > 0
+                            ? comments.map((comment, idx) => (
                                 <li key={idx} className="comment">
-                                    <p>{comment}</p>
+                                    <p>{comment.text}</p>
                                 </li>
                             ))
                             : <p className="no-comment">No comments.</p>
@@ -96,21 +81,12 @@ const Details = ({addComment}) => {
             <article className="create-comment">
                 <label>Add new comment:</label>
                 <form className="form" onSubmit={addCommentHandler}>
-                    <input
-                        type="text"
-                        name='username'
-                        placeholder='John Dow'
-                        value={gameComment.username}
-                        onChange={onChange}
-                        onBlur={validateUser}
-                    />
-                    {errors && <div style={{ color: 'red' }}>{errors.username}</div>}
 
                     <textarea
                         name="comment"
                         placeholder="Comment......"
-                        value={gameComment.comment}
-                        onChange={onChange}
+                        defaultValue=''
+
                     />
                     <input
                         className="btn submit"
