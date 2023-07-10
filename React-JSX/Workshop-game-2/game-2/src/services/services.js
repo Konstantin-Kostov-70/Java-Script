@@ -19,3 +19,18 @@ export const getAll = async() => {
     const result = await res.json()
     return result
 }
+
+export const getOne = async(id) => {
+    const res = await fetch(`${url}/${id}`)
+    const result = await res.json()
+    return result
+}
+
+export const deleteOne = async(id) => {
+    const res = await fetch(`${url}/${id}`, {
+        method: 'DELETE',
+    })
+    const result = await res.json()
+    return result
+}
+

@@ -11,7 +11,7 @@ export const GameCard = ({game}) => {
             <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
         </div>
         <div className="data-buttons">
-            <Link to={'/details/:id'} className="btn details-btn">Details</Link>
+            <Link to={`/details/${game._id}`} className="btn details-btn">Details</Link>
         </div>
     </div>
     )

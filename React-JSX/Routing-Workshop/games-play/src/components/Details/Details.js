@@ -25,7 +25,6 @@ const Details = () => {
     }, [])
 
     const onDelete = () => {
-        console.log('ok');
         gameService.deleteGame(id)
         deleteGameHandler(id)
         navigate('/catalogue')

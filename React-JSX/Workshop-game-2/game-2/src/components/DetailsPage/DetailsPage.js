@@ -1,21 +1,41 @@
+import { useEffect, useState } from 'react'
+import { Link, useParams, useNavigate } from 'react-router-dom'
+import * as services from '../../services/services'
+
 export const DetailsPage = () => {
+
+    const {id} = useParams()
+    const [game, setGame] = useState({})
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        services.getOne(id)
+        .then(result => {
+            setGame(result)
+        })
+    }, id)
+
+    const onDelete = () => {
+        console.log('ok')
+        services.deleteOne(id)
+        navigate('/catalog')
+    }
+ 
+
     return (
         <section id="game-details">
         <h1>Game Details</h1>
         <div className="info-section">
 
             <div className="game-header">
-                <img className="game-img" src="images/MineCraft.png" />
-                <h1>Bright</h1>
-                <span className="levels">MaxLevel: 4</span>
-                <p className="type">Action, Crime, Fantasy</p>
+                <img className="game-img" src={game.imageUrl} alt='img' />
+                <h1>{game.title}</h1>
+                <span className="levels">MaxLevel: {game.maxLevel}</span>
+                <p className="type">{game.category}</p>
             </div>
 
             <p className="text">
-                Set in a world where fantasy creatures live side by side with humans. A human cop is forced to work
-                with an Orc to find a weapon everyone is prepared to kill for. Set in a world where fantasy
-                creatures live side by side with humans. A human cop is forced
-                to work with an Orc to find a weapon everyone is prepared to kill for.
+                {game.summary}
             </p>
 
             {/* <!-- Bonus ( for Guests and Users ) --> */}
@@ -36,8 +56,8 @@ export const DetailsPage = () => {
 {/* 
             <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
             <div className="buttons">
-                <a href="#" className="button">Edit</a>
-                <a href="#" className="button">Delete</a>
+                <Link to={`/edit/${id}`} className="button">Edit</Link>
+                <button className="button" onClick={onDelete}>Delete</button>
             </div>
         </div>
 
