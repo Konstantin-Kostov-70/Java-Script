@@ -8,8 +8,8 @@ class Games(models.Model):
     category = models.CharField(
         max_length= 20
     )
-    max_level = models.IntegerField()
-    image_url = models.URLField()
+    maxLevel = models.IntegerField()
+    imageUrl = models.URLField()
     summary = models.TextField()
     created_on = models.DateTimeField(
         auto_now_add=True

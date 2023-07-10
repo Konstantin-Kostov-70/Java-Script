@@ -13,7 +13,7 @@ export const DetailsPage = () => {
         .then(result => {
             setGame(result)
         })
-    }, id)
+    }, [id])
 
     const onDelete = () => {
         console.log('ok')
