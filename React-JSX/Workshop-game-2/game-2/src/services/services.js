@@ -31,7 +31,7 @@ export const getOne = async (id) => {
 }
 
 export const deleteOne = async (id) => {
-    const res = await fetch(`${url}/${id}`, {
+    await fetch(`${url}/${id}`, {
         method: 'DELETE',
     })
     // const result = await res.json()

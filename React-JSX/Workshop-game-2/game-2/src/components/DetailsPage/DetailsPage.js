@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState , useContext} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import * as services from '../../services/services'
+import { GameContext } from '../../contexts/gameContext'
 
 export const DetailsPage = () => {
-
+  
     const {id} = useParams()
     const [game, setGame] = useState({})
     const navigate = useNavigate()
+    const {delGame} = useContext(GameContext)
 
     useEffect(() => {
         services.getOne(id)
@@ -16,8 +18,8 @@ export const DetailsPage = () => {
     }, [id])
 
     const onDelete = () => {
-        console.log('ok')
         services.deleteOne(id)
+        delGame(id)
         navigate('/catalog')
     }
  

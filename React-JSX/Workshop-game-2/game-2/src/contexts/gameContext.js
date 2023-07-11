@@ -15,8 +15,12 @@ export const GameProvider = ({
       })
     },[])
 
+    const delGame = (id) => { 
+      setGames(state => (state.filter(obj => obj.id !== parseInt(id))))
+    }
+
     return (
-      <GameContext.Provider value={{games, }}>
+      <GameContext.Provider value={{games, delGame}}>
         {children}
       </GameContext.Provider>
     )
