@@ -1,4 +1,16 @@
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import * as services from '../../services/services'
+
 export const EditPage = () => {
+    const {id} = useParams()
+    const [game, setGame] = useState({})
+
+    useEffect(() => {
+       services.getOne(id)
+       .then(res => setGame(res))
+    },[id])
+
     return (
         <section id="edit-page" className="auth">
         <form id="edit">
