@@ -1,5 +1,5 @@
 // const url = 'http://localhost:3030/data/games'
-const url = 'http://localhost:8000/games'
+const url = 'http://localhost:8000/games/'
 
 // export const getAll = () => {
 //     return fetch(url)
@@ -25,7 +25,7 @@ export const getAll = async() => {
 }
 
 export const getOne = async (id) => {
-    const res = await fetch(`${url}/${id}`)
+    const res = await fetch(`${url}${id}`)
     const result = await res.json()
     return result
 }
@@ -34,7 +34,17 @@ export const deleteOne = async (id) => {
     await fetch(`${url}/${id}`, {
         method: 'DELETE',
     })
-    // const result = await res.json()
-    // return result
 }
 
+export const createOne = async (data) => {
+    const res = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    const result = await res.json()
+    return result
+
+}
