@@ -40,7 +40,7 @@ export const EditPage = () => {
         .then(res => {
             editGame(id, res)
         })
-        navigate('/catalog')
+        navigate(`/details/${id}`)
     }
     
     return (
