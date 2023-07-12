@@ -1,6 +1,6 @@
 import { useEffect, useState , useContext} from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import * as services from '../../services/services'
+import * as services from '../../services/gameServices'
 import { GameContext } from '../../contexts/gameContext'
 
 export const DetailsPage = () => {
