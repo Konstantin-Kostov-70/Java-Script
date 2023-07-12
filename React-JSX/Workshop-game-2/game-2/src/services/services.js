@@ -31,7 +31,7 @@ export const getOne = async (id) => {
 }
 
 export const deleteOne = async (id) => {
-    await fetch(`${url}/${id}`, {
+    await fetch(`${url}${id}`, {
         method: 'DELETE',
     })
 }
@@ -47,4 +47,16 @@ export const createOne = async (data) => {
     const result = await res.json()
     return result
 
+}
+
+export const editOne = async (id, data) => {
+    const res = await fetch(`${url}${id}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    const result = await res.json()
+    return result  
 }

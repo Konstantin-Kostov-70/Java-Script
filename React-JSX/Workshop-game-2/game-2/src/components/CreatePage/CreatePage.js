@@ -1,15 +1,18 @@
 import * as services from '../../services/services'
 import { useContext } from 'react';
 import { GameContext } from '../../contexts/gameContext';
+import { useNavigate } from 'react-router-dom';
 
 export const CreatePage = () => {
     const {addGame} = useContext(GameContext)
+    const navigate = useNavigate()
 
     const onSubmit = (ev) => {
         ev.preventDefault();
         const gameData = Object.fromEntries(new FormData(ev.target))
         services.createOne(gameData)
             .then(res => addGame(res))
+        navigate('/catalog')        
     }
 
     return (
