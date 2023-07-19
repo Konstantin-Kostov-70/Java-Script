@@ -1,10 +1,18 @@
+from django.contrib.auth.models import User
+from django.contrib.auth import login
 from django.core.exceptions import ObjectDoesNotExist
-from rest_framework import status
+from rest_framework import status, generics, permissions
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from knox.auth import AuthToken
+from knox.views import LoginView as KnoxLoginView
 
 from game_rest_server.game_api.models import Games
-from game_rest_server.game_api.serializers import GamesSerializer
+from game_rest_server.game_api.serializers import GamesSerializer, \
+    UserGetSerializer, RegisterUserSerializer
 
 
 class GamesListCreateView(APIView):
@@ -48,3 +56,86 @@ class GameGetEditDeleteView(APIView):
             return Response(status=status.HTTP_200_OK)
         except ObjectDoesNotExist:
             return Response({'message': 'not found'}, status=status.HTTP_204_NO_CONTENT)
+
+
+class UserCreateListView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        get_user_serializer = UserGetSerializer(users, many=True)
+        return Response(get_user_serializer.data)
+
+    # def post(self, request):
+    #     post_user_serializer = RegisterUserSerializer(data=request.data)
+    #     if post_user_serializer.is_valid():
+    #         post_user_serializer.save()
+    #         return Response(post_user_serializer.data, status=status.HTTP_200_OK)
+    #     return Response({'message': "not correct data"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterUserSerializer
+
+
+@api_view(['POST'])
+def login_api(request):
+    serializer = AuthTokenSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    user = serializer.validated_data['user']
+    login(request, user)
+    _, token = AuthToken.objects.create(user)
+    return Response({
+        'user_info': {
+            'id': user.id,
+            'username': user.username,
+            'email': user.email
+        },
+        'token': token
+    })
+
+
+@api_view(['GET'])
+def get_user_data(request):
+    user = request.user
+    if user.is_authenticated:
+        return Response({
+            'user_info': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            },
+        }, status=status.HTTP_200_OK)
+    return Response({'error': 'not authenticated'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class LoginAPI(KnoxLoginView):
+    permission_classes = (permissions.AllowAny,)
+
+    def get(self, request):
+        user = request.user
+        if user.is_authenticated:
+            return Response({
+                'user_info': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email
+                },
+            }, status=status.HTTP_200_OK)
+        return Response({'error': 'not authenticated'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        _, token = AuthToken.objects.create(user)
+        # return super(LoginAPI, self).post(request, format=None)
+        return Response({
+            'user_info': {
+                'id': user.id,
+                'username': user.username,
+                'email': user.email
+            },
+            'token': token
+        })

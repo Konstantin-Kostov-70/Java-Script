@@ -5,6 +5,8 @@ import { GameContext } from "../../contexts/gameContext"
 
 export const HomePage = () => {
     const {games} = useContext(GameContext)
+    games.reverse()
+    const lastGames = games.length > 2 ? games.slice(0, 2) : games
     return (
         <section id="welcome-world">
 
@@ -16,8 +18,8 @@ export const HomePage = () => {
 
             <div id="home-page">
                 <h1>Latest Games</h1>
-                { games.length > 0
-                ? games.map((game, idx) =>  <GameCard  key={game.id} game={game}/>)
+                { lastGames.length > 0
+                ? lastGames.map((game, idx) =>  <GameCard  key={game.id} game={game}/>)
                 : <p className="no-articles">No games yet</p>
                  }
             </div>

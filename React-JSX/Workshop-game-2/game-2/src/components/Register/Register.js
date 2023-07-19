@@ -1,21 +1,33 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import * as userServices from '../../services/userServices'
 
 export const Register = () => {
+    const navigate = useNavigate()
+    
+    const onSubmit = (ev) => {
+        ev.preventDefault();
+        const registerData = Object.fromEntries(new FormData(ev.target))
+        userServices.userRegister(registerData)
+        .then(res => console.log(res))
+        ev.target.reset()
+        navigate('/')
+    }
+
     return (
         <section id="register-page" className="content auth">
-            <form id="register">
+            <form id="register" onSubmit={onSubmit}>
                 <div className="container">
                     <div className="brand-logo"></div>
                     <h1>Register</h1>
 
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" placeholder="maria@email.com" />
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" id="email" name="username" placeholder="Your username" />
 
-                    <label for="pass">Password:</label>
+                    <label htmlFor="pass">Password:</label>
                     <input type="password" name="password" id="register-password" />
 
-                    <label for="con-pass">Confirm Password:</label>
-                    <input type="password" name="confirm-password" id="confirm-password" />
+                    <label htmlFor="con-pass">Confirm Password:</label>
+                    <input type="password" name="password2" id="confirm-password" />
 
                     <input className="btn submit" type="submit" value="Register" />
 
