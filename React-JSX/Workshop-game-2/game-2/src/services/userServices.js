@@ -1,8 +1,8 @@
-const registerUrl = 'http://localhost:8000/users/register/'
-const loginUrl = 'http://localhost:8000/api/login/'
-
+const registerURL = 'http://localhost:8000/users/register/'
+const loginURL = 'http://localhost:8000/api/login/'
+const logoutURL = 'http://localhost:8000/api/logout/'
 export const userRegister = async (data) => {
-    const res = await fetch(registerUrl, {
+    const res = await fetch(registerURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -13,8 +13,8 @@ export const userRegister = async (data) => {
     return result
 }
 
-export const userLogin = async (data) => {
-    const res = await fetch(loginUrl, {
+export const logUser = async (data) => {
+    const res = await fetch(loginURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -23,4 +23,14 @@ export const userLogin = async (data) => {
     })
     const result = await res.json()
     return result
+}
+
+export const logoutUser = async (token) => {
+    const res = await fetch(logoutURL, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Token ${token}`
+        },
+    })
+    return res.status
 }
