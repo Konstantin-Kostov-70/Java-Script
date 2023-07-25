@@ -10,6 +10,7 @@ export const Login = () => {
     const onSubmit = (ev) => {
         ev.preventDefault();
         const loginData = Object.fromEntries(new FormData(ev.target))
+        console.log(loginData);
         userServices.logUser(loginData)
         .then(res => userLogin(res))
         

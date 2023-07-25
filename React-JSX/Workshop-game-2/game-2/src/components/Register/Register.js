@@ -1,14 +1,28 @@
 import { Link, useNavigate } from 'react-router-dom'
 import * as userServices from '../../services/userServices'
+import { useContext } from 'react'
+import { AuthContext } from '../../contexts/authContext'
 
 export const Register = () => {
     const navigate = useNavigate()
+    const {userLogin} = useContext(AuthContext)
     
     const onSubmit = (ev) => {
         ev.preventDefault();
         const registerData = Object.fromEntries(new FormData(ev.target))
+        const loginData = {
+            username: registerData.username,
+            password: registerData.password
+        }
         userServices.userRegister(registerData)
-        .then(res => console.log(res))
+        .then(status => {
+            status === 201 
+            ? userServices.logUser(loginData)
+              .then(res => {
+                userLogin(res)
+              })              
+            : console.log(status);
+        })
         ev.target.reset()
         navigate('/')
     }

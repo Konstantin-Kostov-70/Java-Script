@@ -1,6 +1,7 @@
 const registerURL = 'http://localhost:8000/users/register/'
 const loginURL = 'http://localhost:8000/api/login/'
 const logoutURL = 'http://localhost:8000/api/logout/'
+
 export const userRegister = async (data) => {
     const res = await fetch(registerURL, {
         method: 'POST',
@@ -9,8 +10,8 @@ export const userRegister = async (data) => {
         },
         body: JSON.stringify(data)
     })
-    const result = await res.json()
-    return result
+   
+    return res.status
 }
 
 export const logUser = async (data) => {

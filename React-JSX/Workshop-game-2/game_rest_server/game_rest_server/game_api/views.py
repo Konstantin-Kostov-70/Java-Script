@@ -5,7 +5,6 @@ from rest_framework import status, generics, permissions
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.decorators import api_view
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from knox.views import LoginView as KnoxLoginView
@@ -76,37 +75,6 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterUserSerializer
-
-
-@api_view(['POST'])
-def login_api(request):
-    serializer = AuthTokenSerializer(data=request.data)
-    serializer.is_valid(raise_exception=True)
-    user = serializer.validated_data['user']
-    login(request, user)
-    _, token = AuthToken.objects.create(user)
-    return Response({
-        'user_info': {
-            'id': user.id,
-            'username': user.username,
-            'email': user.email
-        },
-        'token': token
-    })
-
-
-@api_view(['GET'])
-def get_user_data(request):
-    user = request.user
-    if user.is_authenticated:
-        return Response({
-            'user_info': {
-                'id': user.id,
-                'username': user.username,
-                'email': user.email
-            },
-        }, status=status.HTTP_200_OK)
-    return Response({'error': 'not authenticated'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class LoginAPI(KnoxLoginView):

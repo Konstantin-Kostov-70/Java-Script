@@ -10,9 +10,9 @@ export const Header = () => {
             <nav>
                 {auth.token
                 ? <div id="user">
-                    <Link to={''}>user {auth.user_info.username}</Link>
+                    <Link className='user-name' to={''}>Welcome {auth.user_info.username}</Link>
                     <Link to={'/catalog'}>All games</Link>
-                    <Link to={'/create'}>Create Game</Link>
+                    <Link to={'/create'}>Add Game</Link>
                     <Link to={'/Logout'}>Logout</Link>
                   </div>
                 : <div id="guest">
