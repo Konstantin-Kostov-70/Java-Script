@@ -10,11 +10,7 @@ export const Logout = () => {
 
     useEffect(() => {
         userServices.logoutUser(token)
-        .then(status => {
-            if (status === 204) {
-                userLogout()
-            }
-        })
+        userLogout()
         navigate('/')
     })
 }

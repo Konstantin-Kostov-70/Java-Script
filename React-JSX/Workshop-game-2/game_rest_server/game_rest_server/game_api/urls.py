@@ -1,7 +1,7 @@
 from django.urls import path
 from knox import views as knox_views
 from game_rest_server.game_api.views import GamesListCreateView, \
-    GameGetEditDeleteView, UserCreateListView, RegisterView, LoginAPI
+    GameGetEditDeleteView, UserCreateListView, RegisterView, LoginAPI, CommentCreateView
 
 urlpatterns = [
     path('games/', GamesListCreateView.as_view(), name='games'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('users/register/',  RegisterView.as_view(), name='register'),
     path('api/login/', LoginAPI.as_view(), name='api-login'),
     path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
+    path('comments/<int:pk>', CommentCreateView.as_view(), name='comment')
 ]
 

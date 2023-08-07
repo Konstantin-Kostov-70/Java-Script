@@ -1,4 +1,3 @@
-// const url = 'http://localhost:3030/data/games'
 const url = 'http://localhost:8000/games/'
 
 // export const getAll = () => {

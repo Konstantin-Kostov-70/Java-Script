@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84f8dfa5-3a70-4bce-986d-085cfb169274" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/game-2/src/contexts/gameContext.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/contexts/gameContext.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +23,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Java Script/React-JSX/Workshop-game-2",
+    "last_opened_file_path": "D:/Java Script/React-JSX/Workshop-game-2/game_rest_server",
     "nodejs_package_manager_path": "npm"
   }
 }]]></component>
@@ -36,6 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1689124623940</updated>
       <workItem from="1689124625698" duration="25000" />
+      <workItem from="1690753749540" duration="37000" />
     </task>
     <servers />
   </component>

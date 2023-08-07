@@ -1,16 +1,24 @@
 import * as services from '../../services/gameServices'
 import { useContext } from 'react';
 import { GameContext } from '../../contexts/gameContext';
+import { AuthContext } from '../../contexts/authContext';
 import { useNavigate } from 'react-router-dom';
 
 export const CreatePage = () => {
-    const {addGame} = useContext(GameContext)
-    const navigate = useNavigate()
+    const {addGame} = useContext(GameContext);
+    const {auth} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const owner = auth.user_info.id;
 
+    // TODO if response is not 200 ok don't set game to addGame()
+    
     const onSubmit = (ev) => {
         ev.preventDefault();
-        const gameData = Object.fromEntries(new FormData(ev.target))
-        services.createOne(gameData)
+        const gameData = Object.fromEntries(new FormData(ev.target));
+        services.createOne({
+            ...gameData,
+            owner
+        })
             .then(res => addGame(res))
         navigate('/catalog')        
     }

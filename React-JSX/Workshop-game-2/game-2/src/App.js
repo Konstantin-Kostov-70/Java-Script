@@ -10,6 +10,7 @@ import { CreatePage } from "./components/CreatePage/CreatePage";
 import { Catalog } from "./components/Catalog/Catalog";
 import { GameProvider } from "./contexts/gameContext";
 import { AuthProvider } from "./contexts/authContext";
+import { Profile } from "./components/UserProfile/UserProfile";
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
               <Route path='/login' element={<Login />} />
               <Route path='/logout' element={<Logout />} />
               <Route path='/register' element={<Register />} />
+              <Route path='/profile' element={<Profile />} />
               <Route path='/details/:id' element={<DetailsPage />} />
               <Route path='/edit/:id' element={<EditPage />} />
               <Route path='/create' element={<CreatePage />} />

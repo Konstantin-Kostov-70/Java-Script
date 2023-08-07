@@ -1,20 +1,34 @@
-import { useEffect, useState , useContext} from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import * as services from '../../services/gameServices'
+import * as commentService from '../../services/commentService'
 import { GameContext } from '../../contexts/gameContext'
+import { AuthContext } from '../../contexts/authContext'
 
 export const DetailsPage = () => {
-  
-    const {id} = useParams()
+
+    const { id } = useParams()
     const [game, setGame] = useState({})
+    const [comments, setComments] = useState([])
     const navigate = useNavigate()
-    const {delGame} = useContext(GameContext)
+    const { delGame } = useContext(GameContext)
+    const { auth } = useContext(AuthContext)
+    let owner = ''
+    if (auth.hasOwnProperty('user_info')) {
+        owner = auth.user_info.id
+    }
 
     useEffect(() => {
         services.getOne(id)
-        .then(result => {
-            setGame(result)
-        })
+            .then(result => {
+                setGame(result)
+            })
+
+        commentService.getGameAllComments(id)
+            .then(result => {
+                setComments(result)
+            })
+
     }, [id])
 
     const onDelete = () => {
@@ -22,57 +36,76 @@ export const DetailsPage = () => {
         delGame(id)
         navigate('/catalog')
     }
- 
+
+    const onSubmit = (ev) => {
+        ev.preventDefault()
+        const commentData = Object.fromEntries(new FormData(ev.target))
+        const data = {
+            ...commentData,
+            user: auth.user_info.id,
+            game: parseInt(id)
+        }
+        commentService.createComment(id, data)
+            .then(result => {
+                setComments(state => [
+                    ...state,
+                    result
+                ])
+            })
+        ev.target.reset()
+    }
 
     return (
         <section id="game-details">
-        <h1>Game Details</h1>
-        <div className="info-section">
+            <h1>Game Details</h1>
+            <div className="info-section">
 
-            <div className="game-header">
-                <img className="game-img" src={game.imageUrl} alt='img' />
-                <h1>{game.title}</h1>
-                <span className="levels">MaxLevel: {game.maxLevel}</span>
-                <p className="type">{game.category}</p>
+                <div className="game-header">
+                    <img className="game-img" src={game.imageUrl} alt='img' />
+                    <h1>{game.title}</h1>
+                    <span className="levels">MaxLevel: {game.maxLevel}</span>
+                    <p className="type">{game.category}</p>
+                </div>
+
+                <p className="text">
+                    {game.summary}
+                </p>
+
+                <div className="details-comments">
+                    <h2>Comments:</h2>
+                    {comments.length > 0
+                        ?
+                        comments.map((comment, idx) => (
+
+                            <ul key={idx}>
+                                <li className="comment">
+                                    <p>{comment.comment}</p>
+                                </li>
+                                <p>{comment.username}</p>
+                                <p>{comment.date_of_creation}</p>
+                            </ul>
+                        ))
+                        :
+                        <p className="no-comment">No comments.</p>
+                    }
+                </div>
+                {game.owner === owner &&
+                    <div className="buttons">
+                        <Link to={`/edit/${id}`} className="button">Edit</Link>
+                        <button className="button" onClick={onDelete}>Delete</button>
+                    </div>
+                }
             </div>
 
-            <p className="text">
-                {game.summary}
-            </p>
-
-            {/* <!-- Bonus ( for Guests and Users ) --> */}
-            <div className="details-comments">
-                <h2>Comments:</h2>
-                <ul>
-                    {/* <!-- list all comments for current game (If any) --> */}
-                    <li className="comment">
-                        <p>Content: I rate this one quite highly.</p>
-                    </li>
-                    <li className="comment">
-                        <p>Content: The best game.</p>
-                    </li>
-                </ul>
-                {/* <!-- Display paragraph: If there are no games in the database --> */}
-                <p className="no-comment">No comments.</p>
-            </div>
-{/* 
-            <!-- Edit/Delete buttons ( Only for creator of this game )  --> */}
-            <div className="buttons">
-                <Link to={`/edit/${id}`} className="button">Edit</Link>
-                <button className="button" onClick={onDelete}>Delete</button>
-            </div>
-        </div>
-
-        {/* <!-- Bonus --> */}
-        {/* <!-- Add Comment ( Only for logged-in users, which is not creators of the current game ) --> */}
-        <article className="create-comment">
-            <label>Add new comment:</label>
-            <form className="form">
-                <textarea name="comment" placeholder="Comment......"></textarea>
-                <input className="btn submit" type="submit" value="Add Comment" />
-            </form>
-        </article>
-
-    </section>
+            {auth.hasOwnProperty('user_info') &&
+                <article className="create-comment">
+                    <label>Add new comment:</label>
+                    <form className="form" onSubmit={onSubmit}>
+                        <textarea name="comment" placeholder="Comment......"></textarea>
+                        <input className="btn submit" type="submit" value="Add Comment" />
+                    </form>
+                </article>
+            }
+        </section>
     )
 }

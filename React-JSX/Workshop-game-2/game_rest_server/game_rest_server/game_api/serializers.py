@@ -1,12 +1,18 @@
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-from game_rest_server.game_api.models import Games
+from game_rest_server.game_api.models import Games, Comment
 
 
 class GamesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Games
+        fields = '__all__'
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
         fields = '__all__'
 
 

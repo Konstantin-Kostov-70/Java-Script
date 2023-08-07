@@ -9,9 +9,9 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from knox.views import LoginView as KnoxLoginView
 
-from game_rest_server.game_api.models import Games
+from game_rest_server.game_api.models import Games, Comment
 from game_rest_server.game_api.serializers import GamesSerializer, \
-    UserGetSerializer, RegisterUserSerializer
+    UserGetSerializer, RegisterUserSerializer, CommentSerializer
 
 
 class GamesListCreateView(APIView):
@@ -26,6 +26,32 @@ class GamesListCreateView(APIView):
             post_game_serializer.save()
             return Response(post_game_serializer.data, status=status.HTTP_200_OK)
         return Response({'message': "not correct data"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommentCreateView(APIView):
+    def get(self, request, pk):
+        try:
+            game = Games.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            return Response({'message': 'not found'}, status=status.HTTP_404_NOT_FOUND)
+        all_comments = Comment.objects.all().filter(game=game)
+        get_all_comments_serializer = CommentSerializer(all_comments, many=True)
+        for x in get_all_comments_serializer.data:
+            user_id = x['user']
+            x['username'] = User.objects.get(id=user_id).username
+        return Response(get_all_comments_serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request, pk):
+        user_id = request.data['user']
+        user = User.objects.get(id=user_id)
+
+        post_comment_serializer = CommentSerializer(data=request.data)
+        if post_comment_serializer.is_valid():
+            post_comment_serializer.save()
+            serialized_data = post_comment_serializer.data
+            serialized_data['username'] = user.username
+            return Response(serialized_data, status=status.HTTP_200_OK)
+        return Response({'message': 'not valid_data'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class GameGetEditDeleteView(APIView):
@@ -107,3 +133,5 @@ class LoginAPI(KnoxLoginView):
             },
             'token': token
         })
+
+
