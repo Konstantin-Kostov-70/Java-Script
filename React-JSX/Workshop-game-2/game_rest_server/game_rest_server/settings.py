@@ -132,3 +132,5 @@ REST_FRAMEWORK = {
 REST_KNOX = {
     'TOKEN_TTL': None,  # will create tokens that never expire
 }
+
+AUTH_USER_MODEL = 'game_api.Profile'

@@ -2,9 +2,14 @@ const url = 'http://localhost:8000/comments/'
 
 
 export const getGameAllComments = async(id) => {
-    const res = await fetch(`${url}${id}`)
-    const result = await res.json()
-    return result
+    try {
+        const res = await fetch(`${url}${id}`)
+        const result = await res.json()
+        return result
+        
+    } catch (error) {
+       console.error(error) 
+    }
 }
 
 export const createComment = async(id, data) => {

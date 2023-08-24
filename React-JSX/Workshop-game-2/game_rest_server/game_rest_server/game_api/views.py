@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import status, generics, permissions
@@ -9,9 +8,9 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.auth import AuthToken
 from knox.views import LoginView as KnoxLoginView
 
-from game_rest_server.game_api.models import Games, Comment
+from game_rest_server.game_api.models import Games, Comment, Profile
 from game_rest_server.game_api.serializers import GamesSerializer, \
-    UserGetSerializer, RegisterUserSerializer, CommentSerializer
+    UserSerializer, RegisterUserSerializer, CommentSerializer
 
 
 class GamesListCreateView(APIView):
@@ -38,12 +37,12 @@ class CommentCreateView(APIView):
         get_all_comments_serializer = CommentSerializer(all_comments, many=True)
         for x in get_all_comments_serializer.data:
             user_id = x['user']
-            x['username'] = User.objects.get(id=user_id).username
+            x['username'] = Profile.objects.get(id=user_id).username
         return Response(get_all_comments_serializer.data, status=status.HTTP_200_OK)
 
     def post(self, request, pk):
         user_id = request.data['user']
-        user = User.objects.get(id=user_id)
+        user = Profile.objects.get(id=user_id)
 
         post_comment_serializer = CommentSerializer(data=request.data)
         if post_comment_serializer.is_valid():
@@ -83,22 +82,43 @@ class GameGetEditDeleteView(APIView):
             return Response({'message': 'not found'}, status=status.HTTP_204_NO_CONTENT)
 
 
-class UserCreateListView(APIView):
-    def get(self, request):
-        users = User.objects.all()
-        get_user_serializer = UserGetSerializer(users, many=True)
-        return Response(get_user_serializer.data)
+class UserGetUpdateDeleteView(APIView):
+    def get(self, request, pk):
+        try:
+            user = Profile.objects.get(pk=pk)
+            games = Games.objects.filter(owner=user)
+            get_user_serializer = UserSerializer(user)
+            get_user_games_serializer = GamesSerializer(games, many=True)
+            response_data = {
+                'user': get_user_serializer.data,
+                'user_games': get_user_games_serializer.data
+            }
+            return Response(response_data, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({'message': 'not found'}, status=status.HTTP_204_NO_CONTENT)
 
-    # def post(self, request):
-    #     post_user_serializer = RegisterUserSerializer(data=request.data)
-    #     if post_user_serializer.is_valid():
-    #         post_user_serializer.save()
-    #         return Response(post_user_serializer.data, status=status.HTTP_200_OK)
-    #     return Response({'message': "not correct data"}, status=status.HTTP_400_BAD_REQUEST)
+    def put(self, request, pk):
+        try:
+            user = Profile.objects.get(pk=pk)
+            put_user_serializer = UserSerializer(user, data=request.data)
+            if put_user_serializer.is_valid():
+                put_user_serializer.save()
+                return Response(put_user_serializer.data, status=status.HTTP_200_OK)
+            return Response({'message': put_user_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except ObjectDoesNotExist:
+            return Response({'message': 'not found'}, status=status.HTTP_204_NO_CONTENT)
+
+    def delete(self, request, pk):
+        try:
+            user = Profile.objects.get(pk=pk)
+            user.delete()
+            return Response({'message': 'User is deleted'}, status=status.HTTP_200_OK)
+        except ObjectDoesNotExist:
+            return Response({'message': 'not found'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class RegisterView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    queryset = Profile.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = RegisterUserSerializer
 

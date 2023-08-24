@@ -21,7 +21,9 @@ export const DetailsPage = () => {
     useEffect(() => {
         services.getOne(id)
             .then(result => {
+                result ?
                 setGame(result)
+                : navigate("/errors")
             })
 
         commentService.getGameAllComments(id)

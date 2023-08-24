@@ -1,6 +1,28 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
+
+
+class Profile(AbstractUser):
+    image = models.URLField(
+        blank=True
+    )
+    rank = models.CharField(
+        max_length=20,
+        choices=(
+            ('Gamer', 'Gamer'),
+            ('Super Gamer', 'Super Gamer'),
+            ('Top Gamer', 'Top Gamer'),
+            ('Genius', 'Genius'),
+        ),
+        blank=True
+    )
+    social_media = models.URLField(
+        blank=True,
+    )
+    story = models.TextField(
+        blank=True,
+    )
 
 
 class Games(models.Model):
@@ -17,7 +39,7 @@ class Games(models.Model):
         auto_now_add=True
     )
     owner = models.ForeignKey(
-        to=User,
+        to=Profile,
         on_delete=models.CASCADE
     )
 
@@ -39,6 +61,6 @@ class Comment(models.Model):
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        to=User,
+        to=Profile,
         on_delete=models.CASCADE
     )

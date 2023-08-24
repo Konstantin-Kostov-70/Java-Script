@@ -1,12 +1,23 @@
 import { useContext } from "react"
 import { GameCard } from "./GameCard"
 import { GameContext } from "../../contexts/gameContext"
+import { useNavigate } from "react-router-dom"
 
 
 export const HomePage = () => {
+    const navigate = useNavigate()
     const { games } = useContext(GameContext)
-    games.reverse()
-    const lastGames = games.length > 2 ? games.slice(0, 2) : games
+
+    let  lastGames = ''
+    console.log(games);
+    try {
+        games.reverse()
+        lastGames = games.length > 2 ? games.slice(0, 2) : games
+    } catch (error) {
+       console.error(error);
+       navigate("/errors")
+    }
+    // const lastGames = games.length > 2 ? games.slice(0, 2) : games
     return (
         <section id="welcome-world">
 

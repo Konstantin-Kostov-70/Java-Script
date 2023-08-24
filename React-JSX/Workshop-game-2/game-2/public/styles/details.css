@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 #game-details {
     position: relative;
     display: block;
@@ -10,8 +12,10 @@
 
 #game-details>h1 {
     color: #fff;
-    font-family: "Agency FB";
-    font-size: 55px;
+    /* font-family: "Press Start 2P"; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    letter-spacing: 0.2rem;
+    font-size: 36px;
     font-weight: 700;
     margin-bottom: 40px;
     text-transform: uppercase;

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 #catalog-page {
     background-color: transparent;
     box-shadow: 0px 0px 40px 0px;
@@ -10,8 +12,10 @@
 
 #catalog-page>h1 {
     color: #fff;
-    font-family: "Agency FB";
-    font-size: 48px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    /* font-family: "Press Start 2P"; */
+    letter-spacing: 0.2rem;
+    font-size: 36px;
     font-weight: 700;
     margin-top: 10px;
     text-transform: uppercase;

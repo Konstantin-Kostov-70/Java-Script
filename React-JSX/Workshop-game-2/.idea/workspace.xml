@@ -2,7 +2,29 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="84f8dfa5-3a70-4bce-986d-085cfb169274" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/game_rest_server/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0002_alter_profile_email.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0003_alter_profile_email.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0004_profile_story.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../JS Back-End/Js-back-end-resouces/JS back-end-VIDEO.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../../JS Back-End/Js-back-end-resouces/JS back-end-VIDEO.docx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/public/styles/all-games.css" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/public/styles/all-games.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/public/styles/details.css" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/public/styles/details.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/public/styles/profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/public/styles/profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/public/styles/typography.css" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/public/styles/typography.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/components/Header/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/src/components/Login/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/components/Login/Login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/src/components/UserProfile/UserProfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/components/UserProfile/UserProfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game-2/src/services/userServices.js" beforeDir="false" afterPath="$PROJECT_DIR$/game-2/src/services/userServices.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0001_initial.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0001_initial.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/migrations/0002_rename_content_comment_comment.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/serializers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/game_api/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_rest_server/game_rest_server/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_rest_server/game_rest_server/settings.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,15 +40,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Java Script/React-JSX/Workshop-game-2/game_rest_server",
-    "nodejs_package_manager_path": "npm"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Java Script/React-JSX/Workshop-game-2/game_rest_server&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -37,6 +59,7 @@
       <updated>1689124623940</updated>
       <workItem from="1689124625698" duration="25000" />
       <workItem from="1690753749540" duration="37000" />
+      <workItem from="1692478392762" duration="54000" />
     </task>
     <servers />
   </component>

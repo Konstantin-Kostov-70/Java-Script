@@ -1,3 +1,6 @@
+@import url('https://use.fontawesome.com/releases/v6.4.2/css/all.css');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 #profile-details {
     position: relative;
     display: block;
@@ -10,8 +13,10 @@
 
 #profile-details>h1 {
     color: #fff;
-    font-family: "Agency FB";
-    font-size: 55px;
+    letter-spacing: 0.2rem;
+    /* font-family: "Press Start 2P"; */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 36px;
     font-weight: 700;
     margin-bottom: 40px;
     text-transform: uppercase;
@@ -143,4 +148,22 @@
 .bio>h3 {
     text-align: center;
     margin-bottom: 20px;
+}
+
+.fa-brands.fa-facebook {
+    color: blue;
+    font-size: 20px;
+}
+
+.fa-brands.fa-facebook:hover {
+    color: rgb(118, 118, 251);
+}
+
+.fa-brands.fa-github, .fa-brands.fa-instagram {
+    font-size: 20px;
+    color: #000;
+}
+
+.fa-brands.fa-github:hover, .fa-brands.fa-instagram:hover {
+    color: gray;
 }

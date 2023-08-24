@@ -1,7 +1,6 @@
-from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
-from game_rest_server.game_api.models import Games, Comment
+from game_rest_server.game_api.models import Games, Comment, Profile
 
 
 class GamesSerializer(serializers.ModelSerializer):
@@ -16,10 +15,20 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class UserGetSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
-        exclude = ['password', ]
+        model = Profile
+        fields = [
+            'id',
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'image',
+            'rank',
+            'social_media',
+            'story',
+        ]
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
@@ -37,7 +46,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         required=True)
 
     class Meta:
-        model = User
+        model = Profile
         fields = ('username', 'password', 'password2',)
         # extra_kwargs = {
         #     'first_name': {'required': True},
@@ -50,7 +59,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = User.objects.create(
+        user = Profile.objects.create(
             username=validated_data['username'],
             # email=validated_data['email'],
             # first_name=validated_data['first_name'],

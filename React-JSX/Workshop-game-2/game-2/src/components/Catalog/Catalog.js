@@ -3,6 +3,7 @@ import { GameContext } from '../../contexts/gameContext'
 import { AllGames } from './AllGames'
 
 export const Catalog = () => {
+   
     const {games} = useContext(GameContext)
     return (
         <section id="catalog-page">

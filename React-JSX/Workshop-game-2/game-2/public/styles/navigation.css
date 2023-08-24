@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Kablammo&family=Odibee+Sans&display=swap');
+
 body {
     background-image: url('../images/bg-fixed-3.jpg');
     background-attachment: fixed;
@@ -22,7 +24,8 @@ footer {
 
 .home {
     font-size: auto;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: "Kablammo";
+    color: crimson;
 }
 
 header {
