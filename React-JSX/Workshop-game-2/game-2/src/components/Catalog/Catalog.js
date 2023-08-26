@@ -1,10 +1,20 @@
-import { useContext } from 'react'
-import { GameContext } from '../../contexts/gameContext'
+import { useEffect, useState } from 'react'
 import { AllGames } from './AllGames'
+import * as services from '../../services/gameServices'
 
 export const Catalog = () => {
+    const [games, setGames] = useState([])
+    useEffect(() => {
+        services.getAll()
+            .then(response => {
+                setGames(response.result)
+                console.log(response.status);
+            })
+            .catch(error => {
+                console.error(error)
+            })
+    }, [])
    
-    const {games} = useContext(GameContext)
     return (
         <section id="catalog-page">
         <h1>All Games</h1>

@@ -13,13 +13,12 @@ import { AuthProvider } from "./contexts/authContext";
 import { Profile } from "./components/UserProfile/UserProfile";
 import { UserEdit } from "./components/UserEdit/UserEdit";
 import { ErrorPage } from "./components/Errors/ErrorPage";
-import { ErrorBoundary } from "./components/Boundaries/ErrorBoundaries"
 import { NotFound } from "./components/Errors/NotFound"
 
 
 function App() {
   return (
-    <ErrorBoundary>
+   
       <AuthProvider>
         <div id="box">
           <GameProvider>
@@ -44,7 +43,7 @@ function App() {
           </GameProvider>
         </div>
       </AuthProvider>
-    </ErrorBoundary>
+   
   );
 }
 

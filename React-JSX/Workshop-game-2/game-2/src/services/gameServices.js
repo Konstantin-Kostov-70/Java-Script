@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 const url = 'http://localhost:8000/games/'
 
 
@@ -27,9 +26,15 @@ export const getAll = async () => {
             throw new Error('Network response was not ok')
         }
         const result = await res.json()
-        return result
+        const status = res.status
+        return {
+            result,
+            status
+
+        }
 
     } catch (error) {
+        console.error(error)
         console.log('Bed Response');
      
     }
