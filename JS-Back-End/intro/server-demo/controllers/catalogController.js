@@ -16,7 +16,6 @@ const catalog = (items)  =>`
 const layout = require('../views/layout');
 
 module.exports = (req ,res) => {
-    console.log(Object.entries(database.database));
     res.write(layout(catalog(Object.entries(database.database)), 'Catalog'));
     res.end();
 };
