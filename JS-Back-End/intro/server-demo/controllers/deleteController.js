@@ -1,4 +1,4 @@
-const databases = require('../util/database')
+const databases = require('../utils/database')
 
 module.exports = (req, res) => {
     const id = req.url.split('=')[1];

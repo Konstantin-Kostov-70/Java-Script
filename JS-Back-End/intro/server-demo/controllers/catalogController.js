@@ -1,4 +1,4 @@
-const database = require('../util/database')
+const database = require('../utils/database')
 const catalog = (items)  =>`
     <div>
         <h1>Catalog page</h1>
