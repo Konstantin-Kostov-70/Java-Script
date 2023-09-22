@@ -1,0 +1,13 @@
+<h1>Hello Handlebars</h1>
+{{!-- <h2>Welcome {{user.username}}</h2> --}}
+{{!-- <h3>Email: {{user.email}}</h3> --}}
+{{!-- No need use syntax for nested objects only use "with" --}}
+{{#with user}}
+<h2>Welcome {{username}}</h2>
+<h3>Email: {{email}}</h3>
+{{/with}}
+{{#if count}}
+<p>site visited {{count}} times</p>
+{{else}}
+<p>You are first visitors</p>
+{{/if}}
