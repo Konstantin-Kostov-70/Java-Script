@@ -1,0 +1,33 @@
+{
+  "asdf1234": {
+    "name": "TV",
+    "price": "250"
+  },
+  "qwer5531": {
+    "name": "CD player",
+    "price": "120",
+    "promoted": "on"
+  },
+  "1b7422do": {
+    "name": "Head Phone",
+    "price": 60
+  },
+  "24dfb0": {
+    "name": "item 1",
+    "price": "127",
+    "promoted": "on"
+  },
+  "37a3c825": {
+    "name": "item 2",
+    "price": "20"
+  },
+  "5d32d612": {
+    "name": "item 3",
+    "price": "156",
+    "promoted": "on"
+  },
+  ":24dfb0": {
+    "name": "item 4",
+    "price": "120"
+  }
+}

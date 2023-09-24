@@ -1,0 +1,47 @@
+body {
+    background-color: antiquewhite;
+}
+
+li {
+    list-style: none;
+    font-size: larger;
+}
+
+nav a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    background-color: deeppink;
+    padding: 6px;
+    margin: 10px;
+}
+
+nav a:hover {
+    color:rgb(37, 37, 37);
+    background-color: rgb(249, 113, 185);
+}
+.create {
+    padding: 6px;
+    text-decoration: none;
+    background-color: aqua;
+}
+
+.no-products {
+    font-style: italic;
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.promoted {
+    font-weight: bold;
+    color:chocolate;
+}
+
+.edit {
+    font-weight: 100;
+   text-decoration: none;
+}

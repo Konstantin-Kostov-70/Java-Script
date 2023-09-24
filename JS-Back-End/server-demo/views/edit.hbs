@@ -1,0 +1,18 @@
+<h1>Edit product</h1>
+<form method="post" action="/catalog/edit/{{_id}}">
+    <label for="name">
+        <span>Name:</span><input type="text" name="name" value="{{name}}">
+    </label>
+    <label for="price">
+        <span>Price:</span><input type="number" name="price" value="{{price}}">
+    </label>
+    <label for="price">
+        {{#if promoted}}
+        <span>Promoted:</span><input type="checkbox" name="promoted" checked="true">
+        {{else}}
+        <span>Promoted:</span><input type="checkbox" name="promoted">
+        {{/if}}
+    </label>
+    <button>Save</button>
+
+</form>
