@@ -1,4 +1,12 @@
 const express = require('express');
+// [] initialize and configure express app
+// [] initialize templating lib
+// [] create home controler
+// [] bind routing
+// [] create data services
+// [] implement controler
+
+
 const handlebars = require('express-handlebars');
 
 const hbs = handlebars.create({
