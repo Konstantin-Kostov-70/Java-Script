@@ -2,25 +2,19 @@
   "asd123": {
     "name": "Suzuki Vitara",
     "description": "Årsmodell_2020",
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Suzuki_Grand_Vitara_DDiS.JPG/1200px-Suzuki_Grand_Vitara_DDiS.JPG",
+    "imageUrl": "https://www.topgear.com/sites/default/files/cars-car/image/2021/02/small-5070-vitarahybrid.jpg",
     "price": "15000"
-  },
-  "asd125": {
-    "name": "Mercedes",
-    "description": "Modell-B180,Årsmodell-2007",
-    "imageUrl": "https://images.autouncle.com/se/car_images/005ae77c-95b1-4038-95ff-6cf51d0078ea_mercedes-b180-automat.jpg",
-    "price": "5000"
-  },
-  "9ba3513a-82f5": {
-    "name": "Mazda",
-    "description": "For over 30 years, the MX-5 Miata has proven you don't have to spend an arm and a leg for a sporty roadster.",
-    "imageUrl": "https://www.motortrend.com/uploads/2022/11/2023-Mazda-MX-5-RF-Club-front-three-quarter-view-25.jpg",
-    "price": 45000
   },
   "1c3325a1-d0e0": {
     "name": "BMW",
     "description": "Model-X5,Årsmodell-2022",
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/2019_BMW_X5_M50d_Automatic_3.0_Front.jpg/1200px-2019_BMW_X5_M50d_Automatic_3.0_Front.jpg",
     "price": 35000
+  },
+  "6f32f9f8-e3c3": {
+    "name": "Mazda",
+    "description": "For over 30 years, the MX-5 Miata has proven you don't have to spend an arm and a leg for a sporty roadster.",
+    "imageUrl": "https://www.motortrend.com/uploads/2022/11/2023-Mazda-MX-5-RF-Club-front-three-quarter-view-25.jpg",
+    "price": 45500
   }
 }
