@@ -72,7 +72,7 @@ div.cube {
     display: inline-block;
     border: 1px solid #2b415433;
     background: white;
-    /* width: 23%; */
+    max-width: 350px;
     vertical-align: top;
 }
 
@@ -259,4 +259,13 @@ footer {
     to {
         opacity: 0;
     }
+}
+
+.buttons {
+    display: flex;
+    /* flex-wrap: wrap; */
+}
+.desc {
+    display: none;
+    padding: 10px;
 }

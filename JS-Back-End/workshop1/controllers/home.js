@@ -1,9 +1,15 @@
+const { query } = require("express");
+
 module.exports = {
     async home(req, res) {
-        const cars =  await req.storage.getAll();
+        // req.query have data from home page search form !!!
+        let cars =  await req.storage.getAll(req.query);
+
         res.locals = {
             title: 'Home',
-            cars
+            query: req.query,
+            cars,
+
         };
         res.render('index');
     }

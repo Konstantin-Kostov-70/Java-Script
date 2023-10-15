@@ -4,13 +4,23 @@
 // [x] bind routing
 // [x] create layuot
 // [] create data services
-// [] implement controler
+// - [x] read all
+// - [x] get one by id
+// - [x] create
+// - [] delete
+// - [] edit
+// - [x] search
+// [x] implement controler
+// - [x] home
+// - [x] about
+// - [x] details
+// - [x] create
 
 
 const express = require('express');
 const handlebars = require('express-handlebars');
 const { home } = require('./controllers/home');
-const { create } = require('./controllers/create');
+const create  = require('./controllers/create');
 const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const { error } = require('./controllers/notFound');
@@ -31,7 +41,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(carsService());
 
 app.get('/', home);
-app.get('/create', create);
+app.get('/create', create.get);
+app.post('/create', create.post);
 app.get('/about', about);
 app.get('/details/:id', details);
 app.all('*', error);
