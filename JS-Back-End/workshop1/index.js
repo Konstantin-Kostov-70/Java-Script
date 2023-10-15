@@ -15,12 +15,14 @@
 // - [x] about
 // - [x] details
 // - [x] create
+// [x] add front-end code
 
 
 const express = require('express');
 const handlebars = require('express-handlebars');
 const { home } = require('./controllers/home');
 const create  = require('./controllers/create');
+const deleteCar  = require('./controllers/delete');
 const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const { error } = require('./controllers/notFound');
@@ -43,6 +45,8 @@ app.use(carsService());
 app.get('/', home);
 app.get('/create', create.get);
 app.post('/create', create.post);
+app.get('/delete/:id', deleteCar.get);
+app.post('/delete/:id', deleteCar.post);
 app.get('/about', about);
 app.get('/details/:id', details);
 app.all('*', error);

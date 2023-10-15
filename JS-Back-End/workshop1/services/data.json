@@ -5,12 +5,6 @@
     "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Suzuki_Grand_Vitara_DDiS.JPG/1200px-Suzuki_Grand_Vitara_DDiS.JPG",
     "price": "15000"
   },
-  "asd124": {
-    "name": "BMW",
-    "description": "Model-X5,Årsmodell-2022",
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/2019_BMW_X5_M50d_Automatic_3.0_Front.jpg/1200px-2019_BMW_X5_M50d_Automatic_3.0_Front.jpg",
-    "price": "35000"
-  },
   "asd125": {
     "name": "Mercedes",
     "description": "Modell-B180,Årsmodell-2007",
