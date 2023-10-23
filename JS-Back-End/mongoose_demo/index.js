@@ -11,6 +11,10 @@ async function connectDB() {
 
         const pets = await Pet.find()
         console.log(pets);
+        pets.forEach(pet => {
+           pet.hello();
+           console.log(pet.description);
+        })
     } catch (error) {
         console.error('Database error connection', err);
     }

@@ -10,6 +10,18 @@ species: String,
 color: String
 });
 
+// Methods
+
+petSchema.methods.hello = function () {
+    console.log('Hello');
+}
+
+// Virtual properties(Calculated Properties)
+
+petSchema.virtual('description').get(function(){
+    return `I am ${this.species} my name is ${this.name} and my color is ${this.color}.`
+})
+
 // "pets" is collection in test1 database
 const Pet = mongoose.model('pets', petSchema);
 
