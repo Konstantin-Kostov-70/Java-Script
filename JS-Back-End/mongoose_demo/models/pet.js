@@ -19,7 +19,7 @@ petSchema.methods.hello = function () {
 // Virtual properties(Calculated Properties)
 
 petSchema.virtual('description').get(function(){
-    return `I am ${this.species} my name is ${this.name} and my color is ${this.color}.`
+    return `I am ${this.species}, my name is ${this.name} and my color is ${this.color}.`
 })
 
 // "pets" is collection in test1 database
