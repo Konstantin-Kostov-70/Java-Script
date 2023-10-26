@@ -7,7 +7,7 @@ async function connectDB() {
     try {
         await mongoose.connect(`${CONNECTION_STR}/${DATABASE_NAME}`);
         console.log(`You have be conected to database:${DATABASE_NAME}...`);
-        // Create
+        // CREATE
 
         // ******** Variant1 **********
         // const newPet = new Pet({
@@ -44,7 +44,7 @@ async function connectDB() {
         // const pets = await Pet.findOne({age: 13});
 
 
-        // Update
+        // UPDATE
 
         // Variant1
         // const updatePet = await Pet.updateOne({name: 'Roky'}, {age: 11})
@@ -60,9 +60,20 @@ async function connectDB() {
         // updatePet.save();
         // ============================================================================
         // Variant3
-        const petId = "6537227489c048273f09ba37";
-        await Pet.findByIdAndUpdate(petId, {species: 'fish'});
-        // Delete
+        // If we wont validators work, we must set property runValidators to true
+        const petId = "652e28ce7dfc403382f4792f";
+        await Pet.findByIdAndUpdate(petId, {name: 'Fluffy'}, {runValidators: true});
+
+        // DELETE
+
+        // const petId = "6539b88eb46311d6d2f56bee";
+        // ============================================================================
+        // Variant1
+        // await Pet.deleteOne({name: 'Lisko'})
+        // ============================================================================
+        // Variant2
+        // await Pet.findByIdAndDelete(petId)
+
         const pets = await Pet.find();
         console.log(pets);
     } catch (error) {

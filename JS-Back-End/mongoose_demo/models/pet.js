@@ -4,7 +4,13 @@ const mongoose = require('mongoose');
 
 const petSchema = new mongoose.Schema({
     
-name: String,
+name: {
+    // this is validators !!!!
+    type: String,
+    requared: true,
+    minLength: 4,
+    maxLength: 10
+},
 age: Number,
 species: String,
 color: String
