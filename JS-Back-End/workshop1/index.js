@@ -1,5 +1,5 @@
 // [x] initialize and configure express app
-// [x] initialize templating lib
+// [x] initialize templating lib handlebars
 // [x] create home controler
 // [x] bind routing
 // [x] create layuot

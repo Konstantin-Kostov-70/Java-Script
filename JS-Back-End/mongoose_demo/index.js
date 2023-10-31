@@ -30,7 +30,9 @@ async function connectDB() {
 
         // console.log(newPet);
 
-        // Read
+        // READ
+
+        // ********************************
         // const pets = await Pet.find();
         // pets.forEach(pet => {
         //     pet.hello();
@@ -61,8 +63,8 @@ async function connectDB() {
         // ============================================================================
         // Variant3
         // If we wont validators work, we must set property runValidators to true
-        const petId = "652e28ce7dfc403382f4792f";
-        await Pet.findByIdAndUpdate(petId, {name: 'Fluffy'}, {runValidators: true});
+        // const petId = "652e28ce7dfc403382f4792f";
+        // await Pet.findByIdAndUpdate(petId, {name: 'Fluffy'}, {runValidators: true});
 
         // DELETE
 
