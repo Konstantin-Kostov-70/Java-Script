@@ -69,10 +69,12 @@ h1 {
 }
 
 div.cube {
+    margin-top: 10px;
     display: inline-block;
     border: 1px solid #2b415433;
     background: white;
     max-width: 350px;
+    min-width: 350px;
     vertical-align: top;
 }
 
