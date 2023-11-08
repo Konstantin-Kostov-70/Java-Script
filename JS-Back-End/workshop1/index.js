@@ -65,16 +65,26 @@ async function start() {
     app.use(carsService());
 
     app.get('/', home);
-    app.get('/create', create.get);
-    app.post('/create', create.post);
-    app.get('/delete/:id', deleteCar.get);
-    app.post('/delete/:id', deleteCar.post);
-    app.get('/edit/:id', editCar.get);
-    app.post('/edit/:id', editCar.post);
     app.get('/about', about);
     app.get('/details/:id', details);
-    app.get('/accessories', createAccessory.get);
-    app.post('/accessories', createAccessory.post);
+
+    app.route('/create')
+        .get(create.get)
+        .post(create.post);
+    
+    app.route('/delete/:id')
+       .get(deleteCar.get)
+       .post(deleteCar.post);
+    
+    app.route('/edit/:id')
+       .get(editCar.get)
+       .post(editCar.post);
+
+    app.route('/accessories')
+        .get(createAccessory.get)
+        .post(createAccessory.post);
+    
     app.all('*', error);
+
 }
 
