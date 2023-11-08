@@ -6,14 +6,18 @@ module.exports = {
         res.render('createAccessory')
     },
     async post(req, res) {
+        let image = req.body.imageUrl
+        if (image === '') {
+            image = undefined
+        }
         const accessory = {
             name: req.body.name,
             description: req.body.description,
-            imageUrl: req.body.imageUrl,
+            imageUrl: image,
             price: Number(req.body.price)
         };
         try {
-            await req.storage.createAccessory(accessory);
+            await req.accessory.createAccessory(accessory);
             res.redirect('/');
         } catch (error) {
             console.log('Validation error', error);

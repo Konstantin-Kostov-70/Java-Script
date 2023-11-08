@@ -1,5 +1,4 @@
 const Car = require('../models/Cars');
-const Accessory = require('../models/Accessories');
 
 function carModelView(car) {
     return {
@@ -9,13 +8,6 @@ function carModelView(car) {
         imageUrl: car.imageUrl,
         price: car.price
     }
-}
-
-function notCarImage(car) {
-    if (car.imageUrl === '') {
-        car.imageUrl = 'notFound3.png'
-    }
-    return car
 }
 
 async function getAll(query) {
@@ -52,8 +44,7 @@ async function getById(id) {
 };
 
 async function createCar(car) {
-    const newCar = notCarImage(car)
-    await Car.create(newCar)
+    await Car.create(car)
 }
 
 async function deleteById(id) {
@@ -65,10 +56,6 @@ async function editById(id, car) {
     await Car.findByIdAndUpdate(id, car, {runValidators: true})
 };
 
-async function createAccessory(accessory) {
-    await Accessory.create(accessory)
-}
-
 module.exports = () => (req, res, next) => {
     req.storage = {
         getAll,
@@ -76,7 +63,6 @@ module.exports = () => (req, res, next) => {
         createCar,
         deleteById,
         editById,
-        createAccessory
     }
     next();
 };

@@ -41,8 +41,9 @@ const editCar = require('./controllers/edit');
 const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const { error } = require('./controllers/notFound');
-const carsService = require('./services/carService');
 const createAccessory = require('./controllers/createAccessory');
+const carsService = require('./services/carService');
+const accessoryService = require('./services/accessoryService')
 
 const hbs = handlebars.create({
     extname: '.hbs'
@@ -62,7 +63,9 @@ async function start() {
 
     app.use('/static', express.static('static'));
     app.use(express.urlencoded({ extended: true }));
+    // add carsService and accessoryService to app
     app.use(carsService());
+    app.use(accessoryService());
 
     app.get('/', home);
     app.get('/about', about);
