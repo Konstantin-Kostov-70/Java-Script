@@ -7,8 +7,8 @@
 // - [x] read all
 // - [x] get one by id
 // - [x] create
-// - [] delete
-// - [] edit
+// - [x] delete
+// - [x] edit
 // - [x] search
 // [x] implement controller
 // - [x] home
@@ -23,13 +23,16 @@
 // [x] create Car model
 // [x] create validate rules to Car model
 // [x] upgrade Car services to use Car model
-// [] create Accessory model
+// [x] create Accessory model
 
 
 const express = require('express');
 const handlebars = require('express-handlebars');
 const connectDB = require('./config/DBconfig')
-const Car = require('./models/Cars')
+
+// we only register models in mongoose with out declare variable
+require('./models/Cars')
+require('./models/Accessories')
 
 const { home } = require('./controllers/home');
 const create = require('./controllers/create');
@@ -39,6 +42,7 @@ const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const { error } = require('./controllers/notFound');
 const carsService = require('./services/carService');
+const createAccessory = require('./controllers/createAccessory');
 
 const hbs = handlebars.create({
     extname: '.hbs'
@@ -69,5 +73,8 @@ async function start() {
     app.post('/edit/:id', editCar.post);
     app.get('/about', about);
     app.get('/details/:id', details);
+    app.get('/accessories', createAccessory.get);
+    app.post('/accessories', createAccessory.post);
     app.all('*', error);
 }
+

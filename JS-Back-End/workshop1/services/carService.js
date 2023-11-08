@@ -1,4 +1,5 @@
 const Car = require('../models/Cars');
+const Accessory = require('../models/Accessories');
 
 function carModelView(car) {
     return {
@@ -61,8 +62,12 @@ async function deleteById(id) {
 
 async function editById(id, car) {
     const newCar = notCarImage(car)
-    await Car.findByIdAndUpdate(id, car)
+    await Car.findByIdAndUpdate(id, car, {runValidators: true})
 };
+
+async function createAccessory(accessory) {
+    await Accessory.create(accessory)
+}
 
 module.exports = () => (req, res, next) => {
     req.storage = {
@@ -70,7 +75,8 @@ module.exports = () => (req, res, next) => {
         getById,
         createCar,
         deleteById,
-        editById
+        editById,
+        createAccessory
     }
     next();
 };
