@@ -10,10 +10,14 @@ module.exports = {
                 req.storage.getById(id),
                 req.accessory.getAllAccessories()
             ]);
+            // this filter shows only the accessories that the car does not have
+            const existingId = car.accessories.map(a => a.toString());
+            const availableAccessories = accessories.filter(a => existingId.includes(a.id.toString()) == false);
+    
             res.locals = {
                 title: 'Attach',
                 car,
-                accessories
+                accessories: availableAccessories,
             }
            res.render('attach');
             
