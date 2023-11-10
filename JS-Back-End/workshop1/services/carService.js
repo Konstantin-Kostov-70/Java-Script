@@ -1,19 +1,10 @@
 const Car = require('../models/Cars');
-
-function carModelView(car) {
-    return {
-        id: car._id,
-        name: car.name,
-        description: car.description,
-        imageUrl: car.imageUrl,
-        price: car.price
-    }
-}
+const { carModelView, accessoryModelView } = require('./utils');
 
 async function getAll(query) {
     // with function lean() we take from DB simple js objects with out difficile mongoose functionality
     // const cars =  await Car.find().lean();
-    const options = {}
+    const options = {};
 
     if (query.search) {
         options.name = new RegExp(query.search, 'i');
@@ -52,9 +43,22 @@ async function deleteById(id) {
 };
 
 async function editById(id, car) {
-    const newCar = notCarImage(car)
     await Car.findByIdAndUpdate(id, car, {runValidators: true})
 };
+
+async function attachAccessory(carId, accessoryId) {
+    const car = await Car.findById(carId);
+    car.accessories.push(accessoryId);
+    await car.save();
+}
+
+async function getPopulate(carId) {
+    const car = await Car
+    .findById(carId)
+    .populate('accessories');
+
+    return car.accessories.map(accessoryModelView)
+}
 
 module.exports = () => (req, res, next) => {
     req.storage = {
@@ -63,6 +67,8 @@ module.exports = () => (req, res, next) => {
         createCar,
         deleteById,
         editById,
+        attachAccessory,
+        getPopulate
     }
     next();
 };

@@ -12,9 +12,9 @@ async function connectDB() {
         // Create colection Post and comment in DB test1
         // *********************************************
         // await Post.create({
-        //     author: 'Peter',
-        //     title: 'My first post',
-        //     content: "Lorem ipsum dolor"
+        //     author: 'Ivan',
+        //     title: 'My good post',
+        //     content: "Best car is firma car"
         // });
 
         // await Comment.create({
@@ -23,11 +23,11 @@ async function connectDB() {
         // })
         // ====================================================================== 
 
-        // Make relationship between Post and Comment some pushed reference to comments in Post colection
+        // Make relationship between Post and Comment some pushed reference to comments in Post collection
         // **********************************************************************************************
 
-        // const comment = await Comment.findOne({});
-        // const post = await Post.findOne({});
+        const comment = await Comment.findOne({});
+        const post = await Post.findOne({});
         // post.comments.push(comment);
         // post.save()
         // console.log(post);
@@ -35,9 +35,12 @@ async function connectDB() {
         
         // with method populate() can read all comments
         // ********************************************
-        const post = await Post.findOne({}).populate('comments');
+        // const post = await Post.findOne({}).populate('comments');
+        // console.log(post);
+        console.log(comment);
         console.log(post);
     } catch (error) {
+
         console.error(error);
     }
 }

@@ -7,14 +7,10 @@ module.exports = {
         res.render('create');
     },
     async post(req, res) {
-        let image = req.body.imageUrl
-        if (image === '') {
-            image = undefined
-        }
         const car = {
             name: req.body.name,
             description: req.body.description,
-            imageUrl: image,
+            imageUrl: req.body.imageUrl || undefined,
             price: Number(req.body.price)
         };
         try {

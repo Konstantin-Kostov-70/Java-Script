@@ -42,6 +42,7 @@ const { about } = require('./controllers/about');
 const { details } = require('./controllers/details');
 const { error } = require('./controllers/notFound');
 const createAccessory = require('./controllers/createAccessory');
+const attach = require('./controllers/attach');
 const carsService = require('./services/carService');
 const accessoryService = require('./services/accessoryService')
 
@@ -86,6 +87,11 @@ async function start() {
     app.route('/accessories')
         .get(createAccessory.get)
         .post(createAccessory.post);
+
+    
+    app.route('/attach/:id')
+       .get(attach.get)
+       .post(attach.post);
     
     app.all('*', error);
 
