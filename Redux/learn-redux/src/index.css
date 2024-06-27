@@ -1,0 +1,39 @@
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-color: beige;
+    text-align: center;
+    font-size: xx-large;
+}
+
+button {
+    width: 200px;
+    padding: 10px 20px;
+    font-size: x-large;
+    color: beige;
+}
+
+.btn1 {
+    background-color: blue;
+}
+
+.btn2 {
+    background-color: brown;
+}
+
+.btn3 {
+    background-color: darkgreen;
+}
+
+input {
+    width: 200px;
+    height: 52px;
+    font-size: x-large;
+    padding-left: 20px;
+}
+
+.container {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
